@@ -8,6 +8,9 @@
   "text.autoconfig.mmev2.option.solvers.spellEstimator.prefixes": "Prefixes to consider a spell",
   "text.autoconfig.mmev2.option.solvers.spellEstimator.knownSpells": "Known spells",
 
+  "text.autoconfig.mmev2.option.solvers.skr": "SKR Solvers",
+  "text.autoconfig.mmev2.option.solvers.skr.enable": "Enable",
+
   "text.autoconfig.mmev2.category.czcharmanalysis": "CZ Charm Analysis",
   "text.autoconfig.mmev2.option.czcharmanalysis.enable": "Enable",
   "text.autoconfig.mmev2.option.czcharmanalysis.showBudget": "Show budget",

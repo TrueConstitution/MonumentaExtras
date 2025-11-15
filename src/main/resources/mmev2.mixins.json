@@ -3,13 +3,13 @@
   "minVersion": "0.8",
   "package": "dev.mme.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-  ],
   "client": [
     "BossBarHudMixin",
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "ClientConnectionMixin",
+    "ItemStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1

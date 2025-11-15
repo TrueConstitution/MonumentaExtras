@@ -1,6 +1,7 @@
 package dev.mme;
 
 import dev.mme.features.solvers.SpellEstimator;
+import dev.mme.features.solvers.content.skr.SKRSolvers;
 import dev.mme.features.tooltip.czcharms.CZCharmAnalysis;
 import dev.mme.features.tooltip.czcharms.CZCharmDB;
 import dev.mme.util.FS;
@@ -40,6 +41,8 @@ public class MMEConfig implements ConfigData {
     public static class SolverConfig {
         @ConfigEntry.Gui.CollapsibleObject
         public SpellEstimator.Config spellEstimator = new SpellEstimator.Config();
+        @ConfigEntry.Gui.CollapsibleObject
+        public SKRSolvers.Config skr = new SKRSolvers.Config();
     }
 
     public static class MiscConfig {

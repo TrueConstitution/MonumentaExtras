@@ -2,6 +2,7 @@ package dev.mme;
 
 import dev.mme.core.Config;
 import dev.mme.features.solvers.SpellEstimator;
+import dev.mme.features.solvers.content.skr.SKRScrollSolver;
 import dev.mme.features.tooltip.czcharms.CZCharmAnalysis;
 import dev.mme.features.tooltip.czcharms.CZCharmDB;
 import dev.mme.util.FS;
@@ -21,6 +22,7 @@ public class MMEClient implements ClientModInitializer {
         if (!FS.exists("")) {FS.mkdirs("");}
         new SpellEstimator();
         new CZCharmAnalysis();
+        new SKRScrollSolver();
         new MMECommand();
         CZCharmDB.INSTANCE.getClass();
         Reflections.DEFAULT.getSubTypesOf(Config.class);
