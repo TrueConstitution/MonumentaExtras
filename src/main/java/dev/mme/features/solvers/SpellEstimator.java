@@ -4,6 +4,7 @@ import dev.mme.MMEClient;
 import dev.mme.MMEConfig;
 import dev.mme.core.TextBuilder;
 import dev.mme.listener.ClientBossBarListener;
+import dev.mme.util.ChatUtils;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ClientBossBar;
@@ -11,6 +12,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 import java.util.*;
+
+import static dev.mme.features.strikes.splits.SplitTimer.toFormattedTimeNormal;
 
 public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.EndTick {
     public SpellEstimator() {
@@ -21,14 +24,13 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
 
     public static class Config {
         public boolean enable = true;
-        public List<String> prefixes = new ArrayList<>();
+        public List<String> prefixes = List.of("Casting.+", "Channeling.+");
         @MMEConfig.MapType(key=String.class, value=Integer.class)
         public Map<String, Integer> knownSpells = new HashMap<>();
-        public int getSpellDuration(String text) {
-            int duration = knownSpells.getOrDefault(text, -1);
-            if (duration == -1 && prefixes.stream().anyMatch(text::startsWith)) {
-                return 0;
-            }
+        public int getSpellDuration(Text text) {
+            String string = ChatUtils.stripFormatting(text.getString());
+            int duration = knownSpells.getOrDefault(string, -1);
+            if (duration == -1 && prefixes.stream().anyMatch(string::startsWith)) return 0;
             return duration;
         }
     }
@@ -42,7 +44,7 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
         Config config = config();
         if (!config.enable) return;
         ClientBossBar bar = getBar(uuid);
-        if (!registeredBars.containsKey(uuid) && config.getSpellDuration(bar.getName().getString()) > -1) return;
+        if (!registeredBars.containsKey(uuid) && config.getSpellDuration(bar.getName()) > -1) return;
         switch (type) {
             case ADD, UPDATE_NAME -> registeredBars.compute(uuid, (ignored, prevVal) -> {
                 if (prevVal != null) {
@@ -71,17 +73,17 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
         private final ClientBossBar bar;
         private int ticks = 0;
         private boolean isCountdown;
-        private String initName;
+        private Text initName;
         private Integer completedAtTicks;
         public ChargingSpell(ClientBossBar bar) {
             this.bar = bar;
             this.isCountdown = Math.round(bar.getPercent()) == 1;
-            this.initName = bar.getName().getString();
+            this.initName = bar.getName();
             this.completedAtTicks = config().getSpellDuration(initName);
         }
 
         private void setInitName(Text name) {
-            this.initName = name.getString();
+            this.initName = name;
             this.completedAtTicks = config().getSpellDuration(initName);
             this.isCountdown = Math.round(bar.getPercent()) == 1;
             this.ticks = 0;
@@ -100,12 +102,6 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
                             .withFormat(Formatting.RED).build());
                 }
             }
-        }
-
-        public static String toFormattedTimeNormal(double ticks) {
-            int mins = (int) ticks / 1200;
-            double secs = ticks / 20 - (mins * 60);
-            return String.format(Locale.ROOT, "%s%.2fs", mins > 0 ? String.format(Locale.ROOT, "%02dm ", mins) : "", secs);
         }
     }
 }

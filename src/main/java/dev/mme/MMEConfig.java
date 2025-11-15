@@ -3,6 +3,7 @@ package dev.mme;
 import dev.mme.core.Scoreboard;
 import dev.mme.features.solvers.SpellEstimator;
 import dev.mme.features.solvers.content.skr.SKRSolvers;
+import dev.mme.features.strikes.splits.Splits;
 import dev.mme.features.tooltip.czcharms.CZCharmAnalysis;
 import dev.mme.features.tooltip.czcharms.CZCharmDB;
 import dev.mme.util.FS;
@@ -41,6 +42,10 @@ public class MMEConfig implements ConfigData {
     @ConfigEntry.Category("scoreboard")
     @ConfigEntry.Gui.TransitiveObject
     public Scoreboard.Config scoreboard = new Scoreboard.Config();
+
+    @ConfigEntry.Category("splits")
+    @ConfigEntry.Gui.TransitiveObject
+    public Splits.Config splits = new Splits.Config();
 
     @ConfigEntry.Category("misc")
     @ConfigEntry.Gui.TransitiveObject

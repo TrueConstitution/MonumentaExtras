@@ -4,8 +4,11 @@ import dev.mme.core.Config;
 import dev.mme.core.Scoreboard;
 import dev.mme.features.solvers.SpellEstimator;
 import dev.mme.features.solvers.content.skr.SKRScrollSolver;
+import dev.mme.features.strikes.StrikesManager;
+import dev.mme.features.strikes.splits.Splits;
 import dev.mme.features.tooltip.czcharms.CZCharmAnalysis;
 import dev.mme.features.tooltip.czcharms.CZCharmDB;
+import dev.mme.listener.ActionbarListener;
 import dev.mme.util.FS;
 import dev.mme.util.Reflections;
 import me.shedaniel.autoconfig.ConfigHolder;
@@ -28,6 +31,8 @@ public class MMEClient implements ClientModInitializer {
         new MMECommand();
         SCOREBOARD = new Scoreboard();
         CZCharmDB.INSTANCE.getClass();
+        Splits.INSTANCE.getClass();
+        ActionbarListener.EVENT.register(StrikesManager::onActionbar);
         Reflections.DEFAULT.getSubTypesOf(Config.class);
         ClientLifecycleEvents.CLIENT_STOPPING
                 .register(client -> Reflections.getInstances(Reflections.DEFAULT.getSubTypesOf(Config.class))

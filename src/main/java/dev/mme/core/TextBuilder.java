@@ -92,6 +92,7 @@ public class TextBuilder {
         });
         return this;
     }
+
     public TextBuilder withShowTextHover(String text) {
         self.styled(style -> style.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.literal(text))));
         return this;

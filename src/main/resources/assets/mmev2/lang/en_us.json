@@ -1,5 +1,7 @@
 {
-  "text.mmev2.exception_message": "Exception thrown, click to copy stacktrace",
+  "text.mmev2.uncaught_exception_message": "Exception thrown, click to copy stacktrace",
+  "text.mmev2.invalid_regex_exception": "Invalid regex",
+  "text.mmev2.splits.time_message": "took %s",
 
   "text.autoconfig.mmev2.title": "Monumenta Extras Config",
   "text.autoconfig.mmev2.category.solvers": "Solvers",
@@ -28,6 +30,12 @@
   "text.autoconfig.mmev2.option.scoreboard.enable": "Enable",
   "text.autoconfig.mmev2.option.scoreboard.useTransparentBackground": "Use transparent background",
   "text.autoconfig.mmev2.option.scoreboard.fallbackColor": "Fallback color",
+
+  "text.autoconfig.mmev2.category.splits": "Splits",
+  "text.autoconfig.mmev2.option.splits.enable": "Enable",
+  "text.autoconfig.mmev2.option.splits.showTooltipInstead": "Show completion stats on hover tooltip instead of chat",
+  "text.autoconfig.mmev2.option.splits.showChestCount": "Show chest count",
+  "text.autoconfig.mmev2.option.splits.checkmarkWhenDone": "Show a checkmark instead of numbers when done",
 
   "text.autoconfig.mmev2.category.misc": "Misc",
   "text.autoconfig.mmev2.option.misc.lerpColor": "Lerp percentage colors",

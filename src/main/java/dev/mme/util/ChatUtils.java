@@ -1,6 +1,5 @@
 package dev.mme.util;
 
-import dev.mme.MMEClient;
 import dev.mme.core.TextBuilder;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.ClickEvent;
@@ -8,11 +7,11 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.util.regex.Pattern;
 
 public abstract class ChatUtils {
     private static final MinecraftClient mc = MinecraftClient.getInstance();
+    private static final Pattern STRIP_FORMATTING_PATTERN = Pattern.compile("§[0-9A-FK-OR]", Pattern.CASE_INSENSITIVE);
     public static int logInfo(Object object) {
         if (object instanceof TextBuilder builder) {
             return logInfo(builder.build());
@@ -34,10 +33,14 @@ public abstract class ChatUtils {
     }
 
     public static int logError(Throwable exception, @Nullable String message) {
-        return logInfo(new TextBuilder(Text.translatable("text.mmev2.exception_message")).withClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, Utils.logError(exception, message)));
+        return logInfo(new TextBuilder(Text.translatable("text.mmev2.uncaught_exception_message")).withClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, Utils.logError(exception, message)));
     }
 
     public static void log(Text text) {
         mc.inGameHud.getChatHud().addMessage(text);
+    }
+
+    public static String stripFormatting(String string) {
+        return STRIP_FORMATTING_PATTERN.matcher(string).replaceAll("");
     }
 }

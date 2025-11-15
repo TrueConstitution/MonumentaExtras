@@ -11,7 +11,8 @@
     "InGameHudMixin",
     "ItemStackMixin",
     "MinecraftClientMixin",
-    "access.PlayerListHudAccessor"
+    "access.PlayerListHudAccessor",
+    "access.StyleAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

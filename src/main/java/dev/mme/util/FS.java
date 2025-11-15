@@ -1,14 +1,22 @@
 package dev.mme.util;
 
 import com.google.gson.*;
+import dev.mme.core.StyleSerializer;
+import dev.mme.core.TextColorSerializer;
 import dev.mme.features.tooltip.czcharms.CZCharmEffect;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.text.TextColor;
 
 import java.io.*;
 import java.lang.reflect.Type;
 
 public class FS {
     public static final Gson GSON = new GsonBuilder()
+            .registerTypeAdapter(Text.class, new Text.Serializer())
+            .registerTypeAdapter(TextColor.class, new TextColorSerializer())
+            .registerTypeAdapter(Style.class, new StyleSerializer())
             .registerTypeAdapter(CZCharmEffect.class, new CZCharmEffect.Serializer())
             .setObjectToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE)
             .disableHtmlEscaping()
