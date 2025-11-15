@@ -1,0 +1,8 @@
+{
+  "text.autoconfig.mmev2.title": "Monumenta Extras Config",
+  "text.autoconfig.mmev2.category.solvers": "Solvers",
+  "text.autoconfig.mmev2.option.solvers.spellEstimator": "Spell Estimator",
+  "text.autoconfig.mmev2.option.solvers.spellEstimator.enable": "Enable",
+  "text.autoconfig.mmev2.option.solvers.spellEstimator.prefixes": "Prefixes to consider a spell",
+  "text.autoconfig.mmev2.option.solvers.spellEstimator.knownSpells": "Known spells"
+}

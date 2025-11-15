@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "mmev2",
+  "version": "${version}",
+  "name": "Monumenta Extras V2",
+  "description": "The sequel",
+  "authors": [
+    "TrueConstitution"
+  ],
+  "contact": {
+    "issues": "https://github.com/TrueConstitution/MonumentaExtras",
+    "homepage": "https://modrinth.com/mod/mmev2"
+  },
+  "license": "MIT",
+  "icon": "assets/mmev2/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["dev.mme.MMEClient"],
+    "main": [
+
+    ],
+    "modmenu": [
+      "dev.mme.compat.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "mmev2.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "~${minecraft_version}",
+    "java": ">=17",
+    "cloth-config": ">=${cloth_config_fabric}"
+  },
+  "recommends": {
+    "modmenu": ">=${modmenu}"
+  }
+}
