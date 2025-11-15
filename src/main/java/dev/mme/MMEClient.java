@@ -1,6 +1,7 @@
 package dev.mme;
 
 import dev.mme.core.Config;
+import dev.mme.core.Scoreboard;
 import dev.mme.features.solvers.SpellEstimator;
 import dev.mme.features.solvers.content.skr.SKRScrollSolver;
 import dev.mme.features.tooltip.czcharms.CZCharmAnalysis;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 public class MMEClient implements ClientModInitializer {
     public static ConfigHolder<MMEConfig> CONFIG;
     public static Logger LOGGER = LoggerFactory.getLogger("mmev2");
+    public static Scoreboard SCOREBOARD;
     @Override
     public void onInitializeClient() {
         CONFIG = MMEConfig.register();
@@ -24,6 +26,7 @@ public class MMEClient implements ClientModInitializer {
         new CZCharmAnalysis();
         new SKRScrollSolver();
         new MMECommand();
+        SCOREBOARD = new Scoreboard();
         CZCharmDB.INSTANCE.getClass();
         Reflections.DEFAULT.getSubTypesOf(Config.class);
         ClientLifecycleEvents.CLIENT_STOPPING

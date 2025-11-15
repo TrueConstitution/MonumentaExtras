@@ -5,11 +5,13 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "BossBarHudMixin",
+    "ClientConnectionMixin",
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
+    "InGameHudMixin",
+    "ItemStackMixin",
     "MinecraftClientMixin",
-    "ClientConnectionMixin",
-    "ItemStackMixin"
+    "access.PlayerListHudAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
