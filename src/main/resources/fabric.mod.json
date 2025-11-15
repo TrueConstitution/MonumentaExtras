@@ -13,6 +13,7 @@
   },
   "license": "MIT",
   "icon": "assets/mmev2/icon.png",
+  "accessWidener": "mmev2.accesswidener",
   "environment": "client",
   "entrypoints": {
     "client": ["dev.mme.MMEClient"],

@@ -3,14 +3,18 @@
   "minVersion": "0.8",
   "package": "dev.mme.mixin",
   "compatibilityLevel": "JAVA_17",
+  "plugin": "dev.mme.mixin.MainMixinPlugin",
   "client": [
     "BossBarHudMixin",
     "ClientConnectionMixin",
     "ClientPlayerInteractionManagerMixin",
     "ClientPlayNetworkHandlerMixin",
+    "DrawContextMixin",
     "InGameHudMixin",
     "ItemStackMixin",
+    "KeyboardMixin",
     "MinecraftClientMixin",
+    "access.HandledScreenAccessor",
     "access.PlayerListHudAccessor",
     "access.StyleAccessor"
   ],
