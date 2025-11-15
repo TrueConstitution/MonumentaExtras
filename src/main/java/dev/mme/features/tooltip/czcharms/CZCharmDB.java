@@ -21,6 +21,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CZCharmDB implements InteractBlockListener {
+    public static final CZCharmDB INSTANCE = new CZCharmDB();
     public CZCharmDB() {
         InteractBlockListener.EVENT.register(this);
     }
@@ -90,7 +91,8 @@ public class CZCharmDB implements InteractBlockListener {
                                 hasChanged = true;
                                 CZCharm charm = CZCharm.parseStack(item);
                                 BlockPos playerPos = client.player.getBlockPos();
-                                DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getDimension().toString(), new Vector3d(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ()), new Vector3d(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i + ":" + stack.getName().getString() + ":" + j));
+                                Vector3d lastInteractPos = lastInteractBlock == null ? null : new Vector3d(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ());
+                                DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getDimension().toString(), lastInteractPos, new Vector3d(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i + ":" + stack.getName().getString() + ":" + j));
                             }
                         }
                     }
@@ -99,7 +101,8 @@ public class CZCharmDB implements InteractBlockListener {
                     hasChanged = true;
                     CZCharm charm = CZCharm.parseStack(stack.getOrCreateNbt());
                     BlockPos playerPos = client.player.getBlockPos();
-                    DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getDimension().toString(), new Vector3d(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ()), new Vector3d(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i));
+                    Vector3d lastInteractPos = lastInteractBlock == null ? null : new Vector3d(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ());
+                    DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getDimension().toString(), lastInteractPos, new Vector3d(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i));
                 }
             }
             if (hasChanged) {

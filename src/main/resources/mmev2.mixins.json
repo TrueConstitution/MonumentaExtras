@@ -7,7 +7,9 @@
   ],
   "client": [
     "BossBarHudMixin",
-    "ClientPlayNetworkHandlerMixin"
+    "ClientPlayerInteractionManagerMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

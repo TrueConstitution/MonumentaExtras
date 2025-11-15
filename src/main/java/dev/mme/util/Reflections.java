@@ -5,6 +5,7 @@ import org.spongepowered.asm.mixin.transformer.ClassInfo;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.JarURLConnection;
 import java.net.URL;
@@ -13,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Stream;
@@ -23,6 +25,37 @@ public class Reflections {
 
     public Reflections(String packageName) {
         this.packageName = packageName;
+    }
+
+    public static Object invokeMethod(Object object, String method, Object... args)  {
+        return invokeMethod(object, e -> {}, method, args);
+    }
+
+    public static Object invokeMethod(Object object, Consumer<Exception> errorHandler, String method, Object... args) {
+        Class<?> clazz = object.getClass();
+        try {
+            return invokeMethod(object, errorHandler, clazz.getDeclaredMethod(method), args);
+        } catch (NoSuchMethodException e) {
+            while ((clazz = clazz.getSuperclass()) != null) {
+                try {
+                    return invokeMethod(object, errorHandler, clazz.getDeclaredMethod(method), args);
+                } catch (NoSuchMethodException ignored) {
+                }
+            }
+        }
+        return null;
+    }
+    public static Object invokeMethod(Object object, Consumer<Exception> errorHandler, Method method, Object... args) {
+        try {
+            method.setAccessible(true);
+            Object r = method.invoke(object, args);
+            method.setAccessible(false);
+            return r;
+        } catch (IllegalAccessException | InvocationTargetException ignored) {}
+        catch (Exception ex) {
+            errorHandler.accept(ex);
+        }
+        return null;
     }
 
     /**
