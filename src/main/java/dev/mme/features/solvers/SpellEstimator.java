@@ -1,4 +1,4 @@
-package dev.mme.feature;
+package dev.mme.features.solvers;
 
 import dev.mme.MMEClient;
 import dev.mme.MMEConfig;
@@ -10,10 +10,7 @@ import net.minecraft.client.gui.hud.ClientBossBar;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.EndTick {
     public SpellEstimator() {
@@ -22,9 +19,26 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
     }
     private static final Map<UUID, ChargingSpell> registeredBars = new HashMap<>();
 
+    public static class Config {
+        public boolean enable = true;
+        public List<String> prefixes = new ArrayList<>();
+        public MMEConfig.StrIntMap knownSpells = new MMEConfig.StrIntMap();
+        public int getSpellDuration(String text) {
+            int duration = knownSpells.getOrDefault(text, -1);
+            if (duration == -1 && prefixes.stream().anyMatch(text::startsWith)) {
+                return 0;
+            }
+            return duration;
+        }
+    }
+
+    public static Config config() {
+        return MMEClient.CONFIG.get().solvers.spellEstimator;
+    }
+
     @Override
     public void onBossBar(Type type, UUID uuid) {
-        MMEConfig.SpellEstimatorConfig config = MMEClient.CONFIG.get().solvers.spellEstimator;
+        Config config = config();
         if (!config.enable) return;
         ClientBossBar bar = getBar(uuid);
         if (!registeredBars.containsKey(uuid) && config.getSpellDuration(bar.getName().getString()) > -1) return;
@@ -44,7 +58,7 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
     @Override
     public void onEndTick(MinecraftClient client) {
         if (client.world == null) return;
-        MMEConfig.SpellEstimatorConfig config = MMEClient.CONFIG.get().solvers.spellEstimator;
+        Config config = config();
         if (!config.enable) return;
         if (client.world.getTime() % 5 == 0) {
             registeredBars.keySet().removeIf(uuid -> getBar(uuid) == null);
@@ -62,14 +76,12 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
             this.bar = bar;
             this.isCountdown = Math.round(bar.getPercent()) == 1;
             this.initName = bar.getName().getString();
-            MMEConfig.SpellEstimatorConfig config = MMEClient.CONFIG.get().solvers.spellEstimator;
-            this.completedAtTicks = config.getSpellDuration(initName);
+            this.completedAtTicks = config().getSpellDuration(initName);
         }
 
         private void setInitName(Text name) {
             this.initName = name.getString();
-            MMEConfig.SpellEstimatorConfig config = MMEClient.CONFIG.get().solvers.spellEstimator;
-            this.completedAtTicks = config.getSpellDuration(initName);
+            this.completedAtTicks = config().getSpellDuration(initName);
             this.isCountdown = Math.round(bar.getPercent()) == 1;
             this.ticks = 0;
         }
@@ -92,7 +104,7 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
         public static String toFormattedTimeNormal(double ticks) {
             int mins = (int) ticks / 1200;
             double secs = ticks / 20 - (mins * 60);
-            return String.format(Locale.ROOT, "%s%.2fs", mins > 0 ? String.format(Locale.US, "%02dm ", mins) : "", secs);
+            return String.format(Locale.ROOT, "%s%.2fs", mins > 0 ? String.format(Locale.ROOT, "%02dm ", mins) : "", secs);
         }
     }
 }

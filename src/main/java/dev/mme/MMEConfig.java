@@ -1,5 +1,9 @@
 package dev.mme;
 
+import dev.mme.features.solvers.SpellEstimator;
+import dev.mme.features.tooltip.czcharms.CZCharmAnalysis;
+import dev.mme.features.tooltip.czcharms.CZCharmDB;
+import dev.mme.util.FS;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.ConfigHolder;
@@ -21,27 +25,30 @@ public class MMEConfig implements ConfigData {
     @ConfigEntry.Gui.TransitiveObject
     public SolverConfig solvers = new SolverConfig();
 
+    @ConfigEntry.Category("czcharmanalysis")
+    @ConfigEntry.Gui.TransitiveObject
+    public CZCharmAnalysis.Config czcharmanalysis = new CZCharmAnalysis.Config();
+
+    @ConfigEntry.Category("czcharmdb")
+    @ConfigEntry.Gui.TransitiveObject
+    public CZCharmDB.Config czcharmdb = new CZCharmDB.Config();
+
+    @ConfigEntry.Category("misc")
+    @ConfigEntry.Gui.TransitiveObject
+    public MiscConfig misc = new MiscConfig();
+
     public static class SolverConfig {
         @ConfigEntry.Gui.CollapsibleObject
-        public SpellEstimatorConfig spellEstimator = new SpellEstimatorConfig();
+        public SpellEstimator.Config spellEstimator = new SpellEstimator.Config();
     }
 
-    public static class SpellEstimatorConfig {
-        public boolean enable = true;
-        public List<String> prefixes = new ArrayList<>();
-        public StrIntMap knownSpells = new StrIntMap();
-        public int getSpellDuration(String text) {
-            int duration = knownSpells.getOrDefault(text, -1);
-            if (duration == -1 && prefixes.stream().anyMatch(text::startsWith)) {
-                return 0;
-            }
-            return duration;
-        }
+    public static class MiscConfig {
+        public boolean lerpColor = true;
     }
 
     public static ConfigHolder<MMEConfig> register() {
         ConfigHolder<MMEConfig> holder = AutoConfig.register(
-                MMEConfig.class, (config, clazz) -> new GsonConfigSerializer<>(config, clazz, MMEConfigParser.GSON)
+                MMEConfig.class, (config, clazz) -> new GsonConfigSerializer<>(config, clazz, FS.GSON)
         );
         AutoConfig.getGuiRegistry(MMEConfig.class).registerTypeProvider((i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
                 ConfigEntryBuilder.create().startStrList(

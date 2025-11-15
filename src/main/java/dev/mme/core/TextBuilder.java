@@ -113,10 +113,17 @@ public class TextBuilder {
         self.styled(style -> style.withColor((r & 255) << 16 | (g & 255) << 8 | (b & 255)));
         return this;
     }
+
     public TextBuilder withColor(int color) {
         self.styled(style -> style.withColor(color));
         return this;
     }
+
+    public TextBuilder withColor(TextColor color) {
+        self.styled(style -> style.withColor(color));
+        return this;
+    }
+
     public TextBuilder withFont(Identifier font) {
         self.styled(style -> style.withFont(font));
         return this;
