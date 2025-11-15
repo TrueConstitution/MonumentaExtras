@@ -22,7 +22,8 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
     public static class Config {
         public boolean enable = true;
         public List<String> prefixes = new ArrayList<>();
-        public MMEConfig.StrIntMap knownSpells = new MMEConfig.StrIntMap();
+        @MMEConfig.MapType(key=String.class, value=Integer.class)
+        public Map<String, Integer> knownSpells = new HashMap<>();
         public int getSpellDuration(String text) {
             int duration = knownSpells.getOrDefault(text, -1);
             if (duration == -1 && prefixes.stream().anyMatch(text::startsWith)) {

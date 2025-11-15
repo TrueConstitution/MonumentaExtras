@@ -15,8 +15,11 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.minecraft.text.Text;
 
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static me.shedaniel.autoconfig.util.Utils.getUnsafely;
 import static me.shedaniel.autoconfig.util.Utils.setUnsafely;
@@ -55,27 +58,40 @@ public class MMEConfig implements ConfigData {
         public boolean useLocalShardsOverride = false;
     }
 
-    public static ConfigHolder<MMEConfig> register() {
+    @SuppressWarnings("unchecked")
+    public static <K, V> ConfigHolder<MMEConfig> register() {
         ConfigHolder<MMEConfig> holder = AutoConfig.register(
                 MMEConfig.class, (config, clazz) -> new GsonConfigSerializer<>(config, clazz, FS.GSON)
         );
         AutoConfig.getGuiRegistry(MMEConfig.class).registerTypeProvider((i18n, field, config, defaults, guiProvider) -> Collections.singletonList(
                 ConfigEntryBuilder.create().startStrList(
                                 Text.translatable(i18n),
-                                getUnsafely(field, config, new HashMap<>()).entrySet().stream().map(e -> String.format("%s:%s", e.getKey(), e.getValue())).toList()
+                        ((Map<K, V>) getUnsafely(field, config)).entrySet().stream().map(e -> String.format("%s:%s", e.getKey(), e.getValue())).toList()
                         )
-                        .setDefaultValue(() -> defaults == null ? null : ((StrIntMap)getUnsafely(field, defaults)).entrySet().stream().map(e -> String.format("%s:%s", e.getKey(), e.getValue())).toList())
-                        .setSaveConsumer(newValue -> setUnsafely(field, config, new StrIntMap(newValue.stream().map(s -> s.split(":")).collect(Collectors.toMap(p -> p[0], p -> Integer.valueOf(p[1]))))))
-                        .build()), StrIntMap.class);
+                        .setDefaultValue(() -> defaults == null ? null : ((Map<K, V>)getUnsafely(field, defaults)).entrySet().stream().map(e -> String.format("%s:%s", e.getKey(), e.getValue())).toList())
+                        .setSaveConsumer(newValue -> {
+                            MapType annotation = field.getAnnotation(MapType.class);
+                            Map<K, V> result = new HashMap<>();
+                            for (String entry : newValue) {
+                                String[] parts = entry.split(":", 2); // Split on first colon
+                                if (parts.length < 2) continue;
+
+                                K key = (K) FS.GSON.fromJson("\"" + parts[0] + "\"", annotation.key());
+                                V value = (V) FS.GSON.fromJson("\"" + parts[1] + "\"", annotation.value());
+
+                                result.put(key, value);
+                            }
+                            setUnsafely(field, config, result);
+                        })
+                        .build()
+        ), Map.class);
         return holder;
     }
 
-    public static class StrIntMap extends HashMap<String, Integer> {
-        public StrIntMap() {
-            super();
-        }
-        public StrIntMap(Map<String, Integer> map) {
-            super(map);
-        }
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target({ElementType.FIELD})
+    public @interface MapType {
+        Class<?> key();
+        Class<?> value();
     }
 }

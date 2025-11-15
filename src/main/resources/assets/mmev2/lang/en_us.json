@@ -24,6 +24,12 @@
   "text.autoconfig.mmev2.option.czcharmdb.mode": "Container title mode",
   "text.autoconfig.mmev2.option.czcharmdb.containerTitles": "Container titles",
 
+  "text.autoconfig.mmev2.category.scoreboard": "Scoreboard",
+  "text.autoconfig.mmev2.option.scoreboard.enable": "Enable",
+  "text.autoconfig.mmev2.option.scoreboard.useTransparentBackground": "Use transparent background",
+  "text.autoconfig.mmev2.option.scoreboard.fallbackColor": "Fallback color",
+
   "text.autoconfig.mmev2.category.misc": "Misc",
-  "text.autoconfig.mmev2.option.misc.lerpColor": "Lerp percentage colors"
+  "text.autoconfig.mmev2.option.misc.lerpColor": "Lerp percentage colors",
+  "text.autoconfig.mmev2.option.misc.useLocalShardsOverride": "Use local shards.json override"
 }
