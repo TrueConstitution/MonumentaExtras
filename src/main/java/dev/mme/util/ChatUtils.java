@@ -33,7 +33,7 @@ public abstract class ChatUtils {
     }
 
     public static int logError(Throwable exception, @Nullable String message) {
-        return logInfo(new TextBuilder(Text.translatable("text.mmev2.uncaught_exception_message")).withClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, Utils.logError(exception, message)));
+        return logInfo(new TextBuilder(Text.translatable("text.mmev2.uncaught_exception_message", message)).withClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, Utils.logError(exception, message)));
     }
 
     public static void log(Text text) {

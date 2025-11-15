@@ -1,5 +1,5 @@
 {
-  "text.mmev2.uncaught_exception_message": "Exception thrown, click to copy stacktrace",
+  "text.mmev2.uncaught_exception_message": "Exception thrown: %s, click to copy stacktrace",
   "text.mmev2.invalid_regex_exception": "Invalid regex",
   "text.mmev2.splits.time_message": "took %s",
 

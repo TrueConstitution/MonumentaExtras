@@ -1,6 +1,8 @@
 package dev.mme.features.tooltip;
 
 import dev.mme.listener.KeyListener;
+import dev.mme.util.ChatUtils;
+import dev.mme.util.FS;
 import dev.mme.util.Utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.WindowFramebuffer;
@@ -22,7 +24,9 @@ import org.lwjgl.glfw.GLFW;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -66,10 +70,25 @@ public abstract class TooltipScreenshotter  {
         framebuffer.endWrite();
         MinecraftClient.getInstance().getFramebuffer().beginWrite(true);
 
-        try (var image = fromFramebuffer(framebuffer)) {
-            final var transferable = new ImageTransferable(javax.imageio.ImageIO.read(new ByteArrayInputStream(image.getBytes())));
-            Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, transferable);
-        } catch (IOException ignored) {}
+        try (NativeImage image = fromFramebuffer(framebuffer)) {
+            BufferedImage buffered = javax.imageio.ImageIO.read(new ByteArrayInputStream(image.getBytes()));
+            if (MinecraftClient.IS_SYSTEM_MAC) {
+                FS.mkParents("cache/tooltip.png");
+                File cachePath = FS.locate("cache/tooltip.png");
+                image.writeTo(cachePath);
+                String[] cmd = {"osascript", "-e", "tell app \"Finder\" to set the clipboard to ( POSIX file \""+cachePath.getAbsolutePath()+"\" )"};
+                try {
+                    Runtime.getRuntime().exec(cmd);
+                } catch (Exception ex) {
+                    ChatUtils.logError(ex, "Caught exception while copying to clipboard");
+                }
+            } else {
+                final var transferable = new ImageTransferable(buffered);
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, transferable);
+            }
+        } catch (IOException ex) {
+            ChatUtils.logError(ex, "Caught exception whilst saving screenshot");
+        }
     }
 
     private static NativeImage fromFramebuffer(Framebuffer framebuffer) {
@@ -89,13 +108,11 @@ public abstract class TooltipScreenshotter  {
 
     static {
         KeyListener.EVENT.register((InputUtil.Key key, int action, CallbackInfo ci) -> {
-            if (!MinecraftClient.IS_SYSTEM_MAC) {
-                if (action == GLFW.GLFW_PRESS && (key.getCode() == 67 && Screen.hasControlDown() && !Screen.hasAltDown())) {
-                    final var item = Utils.getHoveredItem();
-                    if (item.isPresent()) {
-                        toScreenshot = item.get();
-                        ci.cancel();
-                    }
+            if (action == GLFW.GLFW_PRESS && (key.getCode() == 67 && Screen.hasControlDown() && !Screen.hasAltDown())) {
+                final var item = Utils.getHoveredItem();
+                if (item.isPresent()) {
+                    toScreenshot = item.get();
+                    ci.cancel();
                 }
             }
         });
