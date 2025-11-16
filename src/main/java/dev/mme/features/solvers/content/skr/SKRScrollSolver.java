@@ -90,6 +90,10 @@ public class SKRScrollSolver implements JoinedPacketListener, ChatListener, Item
                         (int) predictedPos.x, (int) predictedPos.y, (int) predictedPos.z, Objects.requireNonNull(MinecraftClient.getInstance().world).getRegistryKey().getValue().toString().replace(":", "$")
                 );
                 ChatUtils.logInfo(new TextBuilder("Click to add waypoint").withClickEvent(ClickEvent.Action.RUN_COMMAND, command).build());
+                startPos = null;
+                endPos = null;
+                startColor = null;
+                endColor = null;
                 return;
             }
             if (packet instanceof ParticleS2CPacket particle) {
@@ -97,8 +101,7 @@ public class SKRScrollSolver implements JoinedPacketListener, ChatListener, Item
                 if (effect instanceof DustColorTransitionParticleEffect dustEffect) {
                     endPos = new Vector3d(particle.getX(), particle.getY(), particle.getZ());
                     endColor = dustEffect.getToColor().mul(255);
-                    if (startPos == null) {
-                        startPos = endPos;
+                    if (startColor == null) {
                         startColor = endColor;
                     }
                 }
@@ -125,12 +128,9 @@ public class SKRScrollSolver implements JoinedPacketListener, ChatListener, Item
     @Override
     public void onUse(World world, PlayerEntity user, Hand hand) {
         if (!SKRSolvers.config().enable) return;
-        if (currentScroll == null && user.getMainHandStack().getName().getString().contains("Remnant Scroll")) {
-            TickScheduler.INSTANCE.schedule(2, client -> {
-                startPos = null;
-                endPos = null;
-                currentScroll = user.getMainHandStack().getItem();
-            });
+        if (startPos == null && user.getMainHandStack().getName().getString().contains("Remnant Scroll")) {
+            startPos = new Vector3d(user.getX(), user.getY(), user.getZ());
+            TickScheduler.INSTANCE.schedule(2, client -> currentScroll = user.getMainHandStack().getItem());
         }
     }
 
