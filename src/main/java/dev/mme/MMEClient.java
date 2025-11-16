@@ -30,6 +30,7 @@ public class MMEClient implements ClientModInitializer {
         new CZCharmAnalysis();
         new SKRScrollSolver();
         new MMECommand();
+        new Splits();
         SCOREBOARD = new Scoreboard();
         CZCharmDB.class.getName();
         Splits.class.getName();

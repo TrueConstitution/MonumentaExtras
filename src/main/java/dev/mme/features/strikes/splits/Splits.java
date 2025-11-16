@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBossBarListener, ActionbarListener, SubtitleListener, TitleListener {
-    public static final Splits INSTANCE = new Splits();
     private static final List<SplitTimer> builtinSplits = new ArrayList<>();
     private static final List<SplitTimer> customSplits = new ArrayList<>();
 
@@ -46,7 +45,7 @@ public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBos
         }
     }
 
-    private Splits() {
+    public Splits() {
         ClientTickEvents.END_CLIENT_TICK.register(this);
         ChatListener.EVENT.register(this);
         ClientBossBarListener.EVENT.register(this);
