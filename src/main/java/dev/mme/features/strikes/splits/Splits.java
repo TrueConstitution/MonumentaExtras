@@ -17,6 +17,7 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -29,7 +30,7 @@ public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBos
     private static final List<SplitTimer> builtinSplits = new ArrayList<>();
     private static final List<SplitTimer> customSplits = new ArrayList<>();
     public static final Pattern TRANSFER_PATTERN = Pattern.compile("(?i)Transferring you to (.+)");
-    private RegistryKey<DimensionType> dimension;
+    private RegistryKey<World> dimension;
 
     @Override
     public void onLoginDisconnect(ClientLoginNetworkHandler handler, MinecraftClient client) {
@@ -137,10 +138,10 @@ public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBos
     public void onEndTick(MinecraftClient client) {
         if (!config().enable) return;
         if (client.world != null) {
-            if (dimension != null && !dimension.equals(client.world.getDimensionKey())) {
+            if (dimension != null && !dimension.equals(client.world.getRegistryKey())) {
                 shutdown();
             }
-            dimension = client.world.getDimensionKey();
+            dimension = client.world.getRegistryKey();
         }
         for (SplitTimer split : builtinSplits) {
             split.tick();
@@ -157,7 +158,7 @@ public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBos
             shutdown();
             ClientWorld world = MinecraftClient.getInstance().world;
             if (world != null) {
-                dimension = world.getDimensionKey();
+                dimension = world.getRegistryKey();
             }
         }
         for (SplitTimer split : builtinSplits) {
