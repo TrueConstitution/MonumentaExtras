@@ -35,6 +35,8 @@ public class DepthsAbilityInfo {
         protected void init() {
             try {
                 FS.write(CONFIG_PATH, MMEAPI.fetchData("https://api.playmonumenta.com", "/zenith_charm_effects"));
+            } catch (IOException ignored) {}
+            try {
                 this.loadJson();
                 CZCharmDB.DB.init();
             } catch (IOException ignored) {}

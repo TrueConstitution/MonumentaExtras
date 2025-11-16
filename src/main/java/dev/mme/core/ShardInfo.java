@@ -25,7 +25,12 @@ public class ShardInfo extends Config<Map<String, String>> {
             return;
         }
         try {
-            config = MMEAPI.fetchGHContent("shards.json", new TypeToken<>() {});
+            Map<String, String> newConfig = MMEAPI.fetchGHContent("shards.json", new TypeToken<>() {});
+            if (newConfig == null) {
+                super.init();
+                return;
+            }
+            config = newConfig;
             this.saveJson();
         } catch (IOException ignored) {}
     }

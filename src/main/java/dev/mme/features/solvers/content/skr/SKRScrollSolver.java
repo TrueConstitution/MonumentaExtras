@@ -1,6 +1,7 @@
 package dev.mme.features.solvers.content.skr;
 
 import com.google.common.reflect.TypeToken;
+import dev.mme.MMEClient;
 import dev.mme.core.Config;
 import dev.mme.core.MMEAPI;
 import dev.mme.core.TextBuilder;
@@ -49,9 +50,20 @@ public class SKRScrollSolver implements JoinedPacketListener, ChatListener, Item
         }
 
         @Override
-        protected void saveDefaultConfig() throws IOException {
-            config = MMEAPI.fetchGHContent("skr/riddledata.json", new TypeToken<>() {});
-            super.saveJson();
+        protected void init() {
+            if (SKRSolvers.config().useLocalRiddleDataOverride) {
+                super.init();
+                return;
+            }
+            try {
+                Map<String, Vector3d> newConfig = MMEAPI.fetchGHContent("skr/riddledata.json", new TypeToken<>() {});
+                if (newConfig == null) {
+                    super.init();
+                    return;
+                }
+                config = newConfig;
+                this.saveJson();
+            } catch (IOException ignored) {}
         }
 
         public Vector3d solveRiddle(String riddle) {

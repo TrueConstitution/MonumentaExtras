@@ -53,7 +53,7 @@ public class DepthsAbilityColors extends Config<DepthsAbilityColors.cfg> {
     private boolean update() throws IOException {
         MMEClient.LOGGER.info("Fetching latest CZ charms color coding");
         cfg updatedConfig = MMEAPI.fetchGHContent("cz/colorcoding.json", cfg.class);
-        if (!updatedConfig.version.equals(config.version)) {
+        if (updatedConfig != null && !updatedConfig.version.equals(config.version)) {
             config = updatedConfig;
             MMEClient.LOGGER.info("Updated colors");
             return true;
