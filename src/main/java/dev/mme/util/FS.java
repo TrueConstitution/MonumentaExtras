@@ -3,6 +3,8 @@ package dev.mme.util;
 import com.google.gson.*;
 import dev.mme.core.StyleSerializer;
 import dev.mme.core.TextColorSerializer;
+import dev.mme.features.strikes.splits.triggers.StringTrigger;
+import dev.mme.features.strikes.splits.triggers.Trigger;
 import dev.mme.features.tooltip.czcharms.CZCharmEffect;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.text.Style;
@@ -17,6 +19,7 @@ public class FS {
             .registerTypeAdapter(Text.class, new Text.Serializer())
             .registerTypeAdapter(TextColor.class, new TextColorSerializer())
             .registerTypeAdapter(Style.class, new StyleSerializer())
+            .registerTypeAdapter(Trigger.class, new Trigger.Serializer())
             .registerTypeAdapter(CZCharmEffect.class, new CZCharmEffect.Serializer())
             .setObjectToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE)
             .disableHtmlEscaping()

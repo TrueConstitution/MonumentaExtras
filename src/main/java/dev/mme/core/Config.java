@@ -4,6 +4,7 @@ import com.google.gson.JsonParseException;
 import dev.mme.MMEClient;
 import dev.mme.features.tooltip.czcharms.DepthsAbilityInfo;
 import dev.mme.util.FS;
+import dev.mme.util.Utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -41,19 +42,15 @@ public abstract class Config<T> {
         saveJson();
     }
 
-    protected void renameOld() {
-        FS.locate(CONFIG_PATH).renameTo(FS.locate(CONFIG_PATH + ".old"));
-    }
-
     protected void init() {
         try {
             loadJson();
         } catch (FileNotFoundException e) {try{saveDefaultConfig();}catch(IOException ignored){}}
         catch (JsonParseException ex) {
             try{
-                renameOld();
+                FS.locate(CONFIG_PATH).renameTo(FS.locate(CONFIG_PATH + ".old"));
                 saveDefaultConfig();
-                MMEClient.LOGGER.warn("Neutralizing old config due to bad config");
+                Utils.logError(ex, "Neutralizing old config due to bad config");
             }catch(IOException ignored){}
         }catch(IOException ignored){}
     }
