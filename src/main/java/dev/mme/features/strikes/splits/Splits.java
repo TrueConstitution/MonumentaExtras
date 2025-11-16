@@ -2,6 +2,7 @@ package dev.mme.features.strikes.splits;
 
 import com.google.common.reflect.TypeToken;
 import dev.mme.MMEClient;
+import dev.mme.core.Scoreboard;
 import dev.mme.core.TextBuilder;
 import dev.mme.features.strikes.splits.triggers.BossBarPercentTrigger;
 import dev.mme.features.strikes.splits.triggers.RegexTrigger;
@@ -9,8 +10,10 @@ import dev.mme.features.strikes.splits.triggers.StringTrigger;
 import dev.mme.features.strikes.splits.triggers.Trigger;
 import dev.mme.listener.*;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ClientBossBar;
+import net.minecraft.client.network.ClientLoginNetworkHandler;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.Nullable;
@@ -19,9 +22,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.io.IOException;
 import java.util.*;
 
-public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBossBarListener, ActionbarListener, SubtitleListener, TitleListener {
+public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBossBarListener, ActionbarListener, SubtitleListener, TitleListener, ClientLoginConnectionEvents.Disconnect {
     private static final List<SplitTimer> builtinSplits = new ArrayList<>();
     private static final List<SplitTimer> customSplits = new ArrayList<>();
+
+    @Override
+    public void onLoginDisconnect(ClientLoginNetworkHandler handler, MinecraftClient client) {
+        MMEClient.SCOREBOARD.setContentSupplier(null);
+    }
 
     public static class CustomSplitsConfig extends dev.mme.core.Config<Map<String, CustomSplit>> {
         public static final CustomSplitsConfig INSTANCE = new CustomSplitsConfig();

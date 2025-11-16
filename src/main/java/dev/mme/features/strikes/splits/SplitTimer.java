@@ -60,8 +60,8 @@ public class SplitTimer {
 
     public void tick() {
         if (!active) return;
-        ticksElapsed++;
         if (phase > -1 && phase < timesInTicks.length) {
+            ticksElapsed++;
             timesInTicks[phase]++;
         }
     }
