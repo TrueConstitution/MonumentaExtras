@@ -1,7 +1,7 @@
 {
   "text.mmev2.uncaught_exception_message": "Exception thrown: %s, click to copy stacktrace",
   "text.mmev2.invalid_regex_exception": "Invalid regex",
-  "text.mmev2.splits.time_message": "took %s",
+  "text.mmev2.splits.time_message": " took %s",
 
   "text.autoconfig.mmev2.title": "Monumenta Extras Config",
   "text.autoconfig.mmev2.category.solvers": "Solvers",
