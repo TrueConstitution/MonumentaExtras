@@ -3,18 +3,20 @@ package dev.mme;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.*;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import dev.mme.MMEConfig;
+import dev.mme.core.MMEAPI;
 import dev.mme.core.TickScheduler;
+import dev.mme.features.strikes.splits.Splits;
 import dev.mme.features.tooltip.czcharms.CZCharmDB;
 import dev.mme.util.ChatUtils;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandRegistryAccess;
+import net.minecraft.command.CommandSource;
 
 import java.io.IOException;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
 
@@ -58,6 +60,20 @@ public class MMECommand implements ClientCommandRegistrationCallback {
             }
         }));
         builder.then(czcharms);
+
+        LiteralArgumentBuilder<FabricClientCommandSource> importCMD = ClientCommandManager.literal("import");
+        importCMD.then(ClientCommandManager.literal("splits").then(ClientCommandManager.argument("name", ArgumentTypes.greedyStringArg.arg).suggests((ctx, bder) -> CommandSource.suggestMatching(MMEAPI.getJsonFilesInPath("imports/splits/"), bder)).executes(ctx -> {
+            String toImport = ctx.getArgument("name", String.class);
+            CompletableFuture.runAsync(() -> {
+                try {
+                    Splits.CustomSplit remoteSplit = MMEAPI.fetchGHContent("imports/splits/" + toImport + ".json", Splits.CustomSplit.class);
+                    Splits.CustomSplitsConfig.INSTANCE.importSplit(toImport, remoteSplit);
+                } catch (IOException ex) {
+                    ChatUtils.logError(ex, "Caught error while importing split " + toImport);
+                }
+            });
+            return 1;
+        })));
         dispatcher.register(builder);
     }
 

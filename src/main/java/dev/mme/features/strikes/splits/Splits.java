@@ -66,6 +66,12 @@ public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBos
             customSplits.clear();
             config.forEach((name, split) -> customSplits.add(new SplitTimer(name, split)));
         }
+
+        public void importSplit(String name, CustomSplit split) throws IOException {
+            config.put(name, split);
+            customSplits.add(new SplitTimer(name, split));
+            saveJson();
+        }
     }
 
     public Splits() {
