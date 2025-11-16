@@ -8,7 +8,10 @@ import net.minecraft.client.gui.hud.ClientBossBar;
 import net.minecraft.entity.boss.BossBar;
 import net.minecraft.network.packet.s2c.play.BossBarS2CPacket;
 import net.minecraft.text.Text;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public interface ClientBossBarListener {
@@ -19,8 +22,13 @@ public interface ClientBossBarListener {
     });
     void onBossBar(Type type, UUID uuid);
 
-    default ClientBossBar getBar(UUID uuid) {
+    Map<UUID, Text> UUID_TEXT_MAP = new HashMap<>();
+    default @Nullable ClientBossBar getBar(UUID uuid) {
         return ((IBossBarHud) MinecraftClient.getInstance().inGameHud.getBossBarHud()).mme$getBossbars().get(uuid);
+    }
+
+    default Text getName(UUID uuid) {
+        return UUID_TEXT_MAP.get(uuid);
     }
 
     enum Type {
@@ -35,10 +43,12 @@ public interface ClientBossBarListener {
     class Consumer implements BossBarS2CPacket.Consumer {
         public void add(UUID uuid, Text name, float percent, BossBar.Color color, BossBar.Style style, boolean darkenSky, boolean dragonMusic, boolean thickenFog) {
             EVENT.invoker().onBossBar(Type.ADD, uuid);
+            UUID_TEXT_MAP.put(uuid, name);
         }
 
         public void remove(UUID uuid) {
             EVENT.invoker().onBossBar(Type.REMOVE, uuid);
+            UUID_TEXT_MAP.remove(uuid);
         }
 
         public void updateProgress(UUID uuid, float percent) {
@@ -47,6 +57,7 @@ public interface ClientBossBarListener {
 
         public void updateName(UUID uuid, Text name) {
             EVENT.invoker().onBossBar(Type.UPDATE_NAME, uuid);
+            UUID_TEXT_MAP.put(uuid, name);
         }
 
         public void updateStyle(UUID id, BossBar.Color color, BossBar.Style style) {

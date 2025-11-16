@@ -205,7 +205,7 @@ public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBos
     public void onBossBar(Type type, UUID uuid) {
         if (!config().enable) return;
         ClientBossBar bar = getBar(uuid);
-        final Text name = bar.getName();
+        Text name = getName(uuid);
         final TriggerType triggerType = switch (type) {
             case ADD -> TriggerType.BOSSBAR_ADD;
             case REMOVE -> TriggerType.BOSSBAR_REMOVE;
