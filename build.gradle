@@ -1,5 +1,6 @@
 plugins {
 	id 'fabric-loom' version '1.6-SNAPSHOT'
+	id "com.modrinth.minotaur" version "2.+"
 }
 
 loom {
@@ -72,5 +73,20 @@ java {
 jar {
 	from("LICENSE") {
 		rename { "${it}"}
+	}
+}
+
+if (project.hasProperty("modrinth_key") || System.getenv("modrinth_key") != null) {
+	modrinth {
+		token = project.hasProperty("modrinth_key") ? project.property("modrinth_key") : System.getenv("modrinth_key")
+		projectId = "HJmwqBB5"
+		versionNumber = project.version
+		versionType = "release"
+		versionName = "Monumenta Extras [Fabric $project.minecraft_version] v$project.version"
+		uploadFile = remapJar
+		additionalFiles = [sourcesJar]
+		gameVersions = [project.minecraft_version]
+		loaders = ["fabric"]
+		changelog = project.hasProperty("modrinth_key") ? new File('./CHANGELOG.md').getText('UTF-8') : System.getenv("changelog")
 	}
 }
