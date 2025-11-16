@@ -2,9 +2,7 @@ package dev.mme.core;
 
 import com.google.common.reflect.TypeToken;
 import dev.mme.MMEClient;
-import dev.mme.features.tooltip.czcharms.CZCharmDB;
 import dev.mme.mixin.access.PlayerListHudAccessor;
-import dev.mme.util.FS;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 

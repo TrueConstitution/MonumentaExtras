@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 public class SplitTimer {
     public final Splits.CustomSplit split;
     public final String name;
-    protected int phase;
+    protected int phase = -1;
     private final int[] timesInTicks;
     protected int ticksElapsed = 0;
     protected boolean active;
@@ -59,6 +59,7 @@ public class SplitTimer {
     }
 
     public void tick() {
+        if (!active) return;
         ticksElapsed++;
         if (phase > -1 && phase < timesInTicks.length) {
             timesInTicks[phase]++;
