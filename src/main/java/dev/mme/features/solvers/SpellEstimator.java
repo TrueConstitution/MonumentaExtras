@@ -46,7 +46,7 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
         Config config = config();
         if (!config.enable) return;
         ClientBossBar bar = getBar(uuid);
-        if (!registeredBars.containsKey(uuid) && config.getSpellDuration(bar.getName()) > -1) return;
+        if (!registeredBars.containsKey(uuid) && config.getSpellDuration(bar.getName()) <= -1) return;
         switch (type) {
             case ADD, UPDATE_NAME -> registeredBars.compute(uuid, (ignored, prevVal) -> {
                 if (prevVal != null) {
