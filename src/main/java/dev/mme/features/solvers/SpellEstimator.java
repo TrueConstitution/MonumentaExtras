@@ -5,6 +5,7 @@ import dev.mme.MMEConfig;
 import dev.mme.core.TextBuilder;
 import dev.mme.listener.ClientBossBarListener;
 import dev.mme.util.ChatUtils;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ClientBossBar;
@@ -25,6 +26,7 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
     public static class Config {
         public boolean enable = true;
         public List<String> prefixes = List.of("Casting", "Channeling");
+        @ConfigEntry.Gui.PrefixText
         @MMEConfig.MapType(key=String.class, value=Integer.class)
         public Map<String, Integer> knownSpells = new HashMap<>();
         public int getSpellDuration(Text text) {
