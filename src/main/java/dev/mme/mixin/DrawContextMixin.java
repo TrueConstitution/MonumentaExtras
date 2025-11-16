@@ -1,11 +1,13 @@
 package dev.mme.mixin;
 
+import dev.mme.features.misc.ItemOverlay;
 import dev.mme.features.tooltip.TooltipScreenshotter;
 import dev.mme.util.ChatUtils;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.tooltip.TooltipComponent;
 import net.minecraft.client.gui.tooltip.TooltipPositioner;
+import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -23,5 +25,12 @@ public abstract class DrawContextMixin {
             TooltipScreenshotter.screenshotToClipboard(toScreenshot);
             ChatUtils.logInfo("Copied tooltip to clipboard");
         }
+    }
+
+    @Inject(method="drawItemInSlot(Lnet/minecraft/client/font/TextRenderer;Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V",
+            at = @At(value="INVOKE", target="Lnet/minecraft/client/util/math/MatrixStack;push()V", shift = At.Shift.AFTER)
+    )
+    private void onDrawSlot(TextRenderer textRenderer, ItemStack stack, int x, int y, String countOverride, CallbackInfo ci) {
+        ItemOverlay.onDrawSlot((DrawContext) (Object) this, textRenderer, stack, x, y);
     }
 }
