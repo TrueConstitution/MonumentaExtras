@@ -3,11 +3,13 @@ package dev.mme;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.*;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import dev.mme.core.Config;
 import dev.mme.core.MMEAPI;
 import dev.mme.core.TickScheduler;
 import dev.mme.features.strikes.splits.Splits;
 import dev.mme.features.tooltip.czcharms.CZCharmDB;
 import dev.mme.util.ChatUtils;
+import dev.mme.util.Reflections;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -74,6 +76,15 @@ public class MMECommand implements ClientCommandRegistrationCallback {
             });
             return 1;
         })));
+
+        LiteralArgumentBuilder<FabricClientCommandSource> reloadCMD = ClientCommandManager.literal("reload");
+        reloadCMD.executes(ctx -> {
+            MMEClient.CONFIG.load();
+            Reflections.getInstances(Reflections.DEFAULT.getSubTypesOf(Config.class))
+                    .forEach(c -> Reflections.invokeMethod(c, "loadJson"));
+            return ChatUtils.logInfo("Reloaded all config!");
+        });
+        
         dispatcher.register(builder);
     }
 
