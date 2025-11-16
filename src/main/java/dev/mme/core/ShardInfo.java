@@ -34,6 +34,7 @@ public class ShardInfo extends Config<Map<String, String>> {
 
     public String getShard() {
         Text header = ((PlayerListHudAccessor) MinecraftClient.getInstance().inGameHud.getPlayerListHud()).mme$getHeader();
+        if (header == null) return "unknown";
         Matcher m = TAB_PATTERN.matcher(header.getString());
         if (m.matches()) return m.group(2);
         return "unknown";
@@ -41,6 +42,7 @@ public class ShardInfo extends Config<Map<String, String>> {
 
     public String getProxy() {
         Text header = ((PlayerListHudAccessor) MinecraftClient.getInstance().inGameHud.getPlayerListHud()).mme$getHeader();
+        if (header == null) return "unknown";
         Matcher m = TAB_PATTERN.matcher(header.getString());
         if (m.matches()) return m.group(1);
         return "unknown";
