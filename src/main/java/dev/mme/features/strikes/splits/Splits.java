@@ -2,7 +2,6 @@ package dev.mme.features.strikes.splits;
 
 import com.google.common.reflect.TypeToken;
 import dev.mme.MMEClient;
-import dev.mme.core.Scoreboard;
 import dev.mme.core.TextBuilder;
 import dev.mme.features.strikes.splits.triggers.BossBarPercentTrigger;
 import dev.mme.features.strikes.splits.triggers.RegexTrigger;
@@ -14,20 +13,36 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.ClientBossBar;
 import net.minecraft.client.network.ClientLoginNetworkHandler;
+import net.minecraft.client.world.ClientWorld;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.world.dimension.DimensionType;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBossBarListener, ActionbarListener, SubtitleListener, TitleListener, ClientLoginConnectionEvents.Disconnect {
     private static final List<SplitTimer> builtinSplits = new ArrayList<>();
     private static final List<SplitTimer> customSplits = new ArrayList<>();
+    public static final Pattern TRANSFER_PATTERN = Pattern.compile("(?i)Transferring you to (.+)");
+    private RegistryKey<DimensionType> dimension;
 
     @Override
     public void onLoginDisconnect(ClientLoginNetworkHandler handler, MinecraftClient client) {
+        shutdown();
+    }
+
+    public static void shutdown() {
+        for (SplitTimer split : builtinSplits) {
+            if (split.active) split.done();
+        }
+        for (SplitTimer split : customSplits) {
+            if (split.active) split.done();
+        }
         MMEClient.SCOREBOARD.setContentSupplier(null);
     }
 
@@ -115,6 +130,12 @@ public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBos
     @Override
     public void onEndTick(MinecraftClient client) {
         if (!config().enable) return;
+        if (client.world != null) {
+            if (dimension != null && !dimension.equals(client.world.getDimensionKey())) {
+                shutdown();
+            }
+            dimension = client.world.getDimensionKey();
+        }
         for (SplitTimer split : builtinSplits) {
             split.tick();
         }
@@ -126,6 +147,13 @@ public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBos
     @Override
     public void onChat(Text message, CallbackInfo ci) {
         if (!config().enable) return;
+        if (TRANSFER_PATTERN.matcher(message.getString()).matches()) {
+            shutdown();
+            ClientWorld world = MinecraftClient.getInstance().world;
+            if (world != null) {
+                dimension = world.getDimensionKey();
+            }
+        }
         for (SplitTimer split : builtinSplits) {
             split.onTrigger(message, TriggerType.CHAT);
         }

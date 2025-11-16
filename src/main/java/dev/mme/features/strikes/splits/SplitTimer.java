@@ -75,6 +75,7 @@ public class SplitTimer {
 
     protected void done() {
         this.phase = -1;
+        active = false;
         ChatUtils.logInfo(format(this.split.triggers().get(timesInTicks.length - 1).displayName(), toFormattedTimeNormal(timesInTicks[timesInTicks.length - 1])));
         TextBuilder builder = new TextBuilder(String.format(Locale.US, "%s cleared in %s", name, toFormattedTimeNormal(ticksElapsed)));
         List<Text> formatted = IntStream.range(0, timesInTicks.length)

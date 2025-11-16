@@ -41,7 +41,7 @@ public class Scoreboard implements ClientTickEvents.EndTick {
         lines.clear();
         lines.add(new TextBuilder(" " + new SimpleDateFormat("MM/dd/yy").format(Calendar.getInstance(Locale.US).getTime()))
                 .withFormat(Formatting.GRAY)
-                .append(" " + world.getRegistryKey().getValue().getPath().replaceFirst("monumenta:", ""))
+                .append(" " + ShardInfo.INSTANCE.getShard())
                 .withFormat(Formatting.DARK_GRAY).build());
         lines.add(Text.literal(""));
         if (contentSupplier != null) {
