@@ -76,6 +76,7 @@ public class MMECommand implements ClientCommandRegistrationCallback {
             });
             return 1;
         })));
+        builder.then(importCMD);
 
         LiteralArgumentBuilder<FabricClientCommandSource> reloadCMD = ClientCommandManager.literal("reload");
         reloadCMD.executes(ctx -> {
@@ -84,6 +85,7 @@ public class MMECommand implements ClientCommandRegistrationCallback {
                     .forEach(c -> Reflections.invokeMethod(c, "loadJson"));
             return ChatUtils.logInfo("Reloaded all config!");
         });
+        builder.then(reloadCMD);
         
         dispatcher.register(builder);
     }
