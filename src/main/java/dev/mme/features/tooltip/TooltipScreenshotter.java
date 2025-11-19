@@ -72,17 +72,7 @@ public abstract class TooltipScreenshotter  {
 
         try (NativeImage image = fromFramebuffer(framebuffer)) {
             BufferedImage buffered = javax.imageio.ImageIO.read(new ByteArrayInputStream(image.getBytes()));
-            if (MinecraftClient.IS_SYSTEM_MAC) {
-                FS.mkParents("cache/tooltip.png");
-                File cachePath = FS.locate("cache/tooltip.png");
-                image.writeTo(cachePath);
-                String[] cmd = {"osascript", "-e", "tell app \"Finder\" to set the clipboard to ( POSIX file \""+cachePath.getAbsolutePath()+"\" )"};
-                try {
-                    Runtime.getRuntime().exec(cmd);
-                } catch (Exception ex) {
-                    ChatUtils.logError(ex, "Caught exception while copying to clipboard");
-                }
-            } else {
+            if (!MinecraftClient.IS_SYSTEM_MAC) {
                 final var transferable = new ImageTransferable(buffered);
                 Toolkit.getDefaultToolkit().getSystemClipboard().setContents(transferable, transferable);
             }
