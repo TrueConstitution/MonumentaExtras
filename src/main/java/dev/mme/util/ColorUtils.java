@@ -9,8 +9,6 @@ import java.util.NavigableMap;
 import java.util.Objects;
 import java.util.TreeMap;
 
-import static net.minecraft.util.math.MathHelper.lerp;
-
 public class ColorUtils {
     private static final NavigableMap<Float, Formatting> LERP_MAP = new TreeMap<>(Map.of(
             0f,
@@ -58,6 +56,11 @@ public class ColorUtils {
 
         return TextColor.fromRgb((r << 16) | (g << 8) | b);
     }
+
+    public static float lerp(float a, float b, float t) {
+        return a + (b - a) * t;
+    }
+
 
     public static TextColor getFlatPercentageColor(float percentage) {
         return TextColor.fromFormatting(FLAT_MAP.higherEntry(percentage).getValue());
