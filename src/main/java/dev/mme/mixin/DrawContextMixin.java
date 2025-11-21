@@ -1,7 +1,7 @@
 package dev.mme.mixin;
 
 import dev.mme.features.misc.ItemOverlay;
-import dev.mme.features.tooltip.TooltipScreenshotter;
+import dev.mme.features.misc.TooltipScreenshotter;
 import dev.mme.util.ChatUtils;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

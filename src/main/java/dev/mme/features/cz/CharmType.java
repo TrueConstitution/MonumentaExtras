@@ -1,4 +1,4 @@
-package dev.mme.features.tooltip.czcharms;
+package dev.mme.features.cz;
 
 import java.util.Random;
 

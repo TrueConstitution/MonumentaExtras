@@ -1,4 +1,4 @@
-package dev.mme.features.tooltip.czcharms;
+package dev.mme.features.cz;
 
 import dev.mme.MMEClient;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
@@ -26,7 +26,7 @@ public class CZCharmAnalysis implements ItemTooltipCallback {
     }
 
     public static Config config() {
-        return MMEClient.CONFIG.get().czcharmanalysis;
+        return MMEClient.CONFIG.get().cz.charmanalysis;
     }
 
     @Override

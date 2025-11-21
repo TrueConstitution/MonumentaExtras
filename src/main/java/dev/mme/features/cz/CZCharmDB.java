@@ -1,4 +1,4 @@
-package dev.mme.features.tooltip.czcharms;
+package dev.mme.features.cz;
 
 import com.google.common.reflect.TypeToken;
 import dev.mme.MMEClient;
@@ -36,7 +36,7 @@ public class CZCharmDB implements InteractBlockListener {
     private static BlockPos lastInteractBlock = null;
 
     public static Config config() {
-        return MMEClient.CONFIG.get().czcharmdb;
+        return MMEClient.CONFIG.get().cz.charmdb;
     }
 
     @Override

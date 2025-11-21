@@ -1,4 +1,4 @@
-package dev.mme.features.tooltip;
+package dev.mme.features.misc;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -5,8 +5,9 @@ import dev.mme.features.misc.ItemOverlay;
 import dev.mme.features.solvers.SpellEstimator;
 import dev.mme.features.solvers.content.skr.SKRSolvers;
 import dev.mme.features.strikes.splits.Splits;
-import dev.mme.features.tooltip.czcharms.CZCharmAnalysis;
-import dev.mme.features.tooltip.czcharms.CZCharmDB;
+import dev.mme.features.cz.CZCharmAnalysis;
+import dev.mme.features.cz.CZCharmDB;
+import dev.mme.features.cz.CZMenuFix;
 import dev.mme.util.FS;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
@@ -32,13 +33,9 @@ public class MMEConfig implements ConfigData {
     @ConfigEntry.Gui.TransitiveObject
     public SolverConfig solvers = new SolverConfig();
 
-    @ConfigEntry.Category("czcharmanalysis")
+    @ConfigEntry.Category("cz")
     @ConfigEntry.Gui.TransitiveObject
-    public CZCharmAnalysis.Config czcharmanalysis = new CZCharmAnalysis.Config();
-
-    @ConfigEntry.Category("czcharmdb")
-    @ConfigEntry.Gui.TransitiveObject
-    public CZCharmDB.Config czcharmdb = new CZCharmDB.Config();
+    public CZConfig cz = new CZConfig();
 
     @ConfigEntry.Category("scoreboard")
     @ConfigEntry.Gui.TransitiveObject
@@ -61,6 +58,17 @@ public class MMEConfig implements ConfigData {
         public SpellEstimator.Config spellEstimator = new SpellEstimator.Config();
         @ConfigEntry.Gui.CollapsibleObject
         public SKRSolvers.Config skr = new SKRSolvers.Config();
+    }
+
+    public static class CZConfig {
+        @ConfigEntry.Gui.CollapsibleObject
+        public CZCharmAnalysis.Config charmanalysis = new CZCharmAnalysis.Config();
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public CZCharmDB.Config charmdb = new CZCharmDB.Config();
+
+        @ConfigEntry.Gui.CollapsibleObject
+        public CZMenuFix.Config menufix = new CZMenuFix.Config();
     }
 
     public static class MiscConfig {

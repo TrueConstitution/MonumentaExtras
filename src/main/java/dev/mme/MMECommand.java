@@ -7,7 +7,7 @@ import dev.mme.core.Config;
 import dev.mme.core.MMEAPI;
 import dev.mme.core.TickScheduler;
 import dev.mme.features.strikes.splits.Splits;
-import dev.mme.features.tooltip.czcharms.CZCharmDB;
+import dev.mme.features.cz.CZCharmDB;
 import dev.mme.util.ChatUtils;
 import dev.mme.util.Reflections;
 import me.shedaniel.autoconfig.AutoConfig;

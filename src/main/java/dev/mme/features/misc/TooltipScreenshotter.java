@@ -1,8 +1,7 @@
-package dev.mme.features.tooltip;
+package dev.mme.features.misc;
 
 import dev.mme.listener.KeyListener;
 import dev.mme.util.ChatUtils;
-import dev.mme.util.FS;
 import dev.mme.util.Utils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.WindowFramebuffer;
@@ -26,7 +25,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package dev.mme.mixin;
 
-import dev.mme.features.tooltip.czcharms.CZCharmDB;
+import dev.mme.features.cz.CZCharmDB;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;

@@ -1,8 +1,6 @@
 package dev.mme.core;
 
 import com.google.gson.JsonParseException;
-import dev.mme.MMEClient;
-import dev.mme.features.tooltip.czcharms.DepthsAbilityInfo;
 import dev.mme.util.FS;
 import dev.mme.util.Utils;
 
