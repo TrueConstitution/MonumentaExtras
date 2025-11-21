@@ -32,7 +32,7 @@ public class CZCharmAnalysis implements ItemTooltipCallback {
     @Override
     public void getTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip) {
         if (!config().enable || !CZCharm.isZenithCharm(stack.getOrCreateNbt())) return;
-        CZCharm charm = CZCharm.parseStack(stack.getOrCreateNbt());
+        CZCharm charm = CZCharm.parseNBT(stack.getOrCreateNbt());
         tooltip.set(0, charm.displayName());
         tooltip.subList(1, tooltip.size()).clear();
         tooltip.addAll(charm.lore());

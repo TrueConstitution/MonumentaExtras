@@ -51,6 +51,7 @@ public class DepthsAbilityInfo {
     public boolean isPercent;
     public double variance;
     public double effectCap;
+    public int maxRarity;
     public DepthsTree tree;
     public double[] rarityValues;
 

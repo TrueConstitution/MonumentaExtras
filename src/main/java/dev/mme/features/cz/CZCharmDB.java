@@ -89,7 +89,7 @@ public class CZCharmDB implements InteractBlockListener {
                             NbtCompound item = storedItems.getCompound(j).getCompound("tag");
                             if (CZCharm.isZenithCharm(item)) {
                                 hasChanged = true;
-                                CZCharm charm = CZCharm.parseStack(item);
+                                CZCharm charm = CZCharm.parseNBT(item);
                                 BlockPos playerPos = client.player.getBlockPos();
                                 Vector3d lastInteractPos = lastInteractBlock == null ? null : new Vector3d(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ());
                                 DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getRegistryKey().getValue().getPath(), lastInteractPos, new Vector3d(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i + ":" + stack.getName().getString() + ":" + j));
@@ -99,7 +99,7 @@ public class CZCharmDB implements InteractBlockListener {
                 }
                 if (CZCharm.isZenithCharm(stack.getOrCreateNbt())) {
                     hasChanged = true;
-                    CZCharm charm = CZCharm.parseStack(stack.getOrCreateNbt());
+                    CZCharm charm = CZCharm.parseNBT(stack.getOrCreateNbt());
                     BlockPos playerPos = client.player.getBlockPos();
                     Vector3d lastInteractPos = lastInteractBlock == null ? null : new Vector3d(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ());
                     DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getRegistryKey().getValue().getPath(), lastInteractPos, new Vector3d(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i));

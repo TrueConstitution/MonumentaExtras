@@ -2,6 +2,7 @@ package dev.mme;
 
 import dev.mme.core.Config;
 import dev.mme.core.Scoreboard;
+import dev.mme.features.cz.CZMenuFix;
 import dev.mme.features.solvers.SpellEstimator;
 import dev.mme.features.solvers.content.skr.SKRScrollSolver;
 import dev.mme.features.strikes.StrikesManager;
@@ -28,6 +29,7 @@ public class MMEClient implements ClientModInitializer {
         if (!FS.exists("")) {FS.mkdirs("");}
         new SpellEstimator();
         new CZCharmAnalysis();
+        new CZMenuFix();
         new SKRScrollSolver();
         new MMECommand();
         new Splits();

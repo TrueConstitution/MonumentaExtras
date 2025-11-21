@@ -28,7 +28,7 @@ public record CZCharm(long uuid, String name, int charmPower, CZCharmRarity rari
         return getBudget(rarity, charmPower, type);
     }
 
-    public static CZCharm parseStack(NbtCompound nbt) {
+    public static CZCharm parseNBT(NbtCompound nbt) {
         NbtCompound monumenta = nbt.getCompound("Monumenta");
         NbtCompound playerModified = monumenta.getCompound("PlayerModified");
         long uuid = playerModified.getLong("DEPTHS_CHARM_UUID");
