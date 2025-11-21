@@ -14,6 +14,7 @@ import dev.mme.listener.ActionbarListener;
 import dev.mme.util.FS;
 import dev.mme.util.Reflections;
 import me.shedaniel.autoconfig.ConfigHolder;
+import me.shedaniel.clothconfig2.api.Tooltip;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ public class MMEClient implements ClientModInitializer {
         new SKRScrollSolver();
         new MMECommand();
         new Splits();
+        new TooltipScreenshotter();
         SCOREBOARD = new Scoreboard();
         CZCharmDB.class.getName();
         Splits.class.getName();

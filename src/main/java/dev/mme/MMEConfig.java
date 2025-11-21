@@ -73,7 +73,9 @@ public class MMEConfig implements ConfigData {
 
     public static class MiscConfig {
         public boolean lerpColor = true;
+        @ConfigEntry.Gui.RequiresRestart
         public boolean useLocalShardsOverride = false;
+        public boolean enableTooltipScreenshotter = true;
     }
 
     @SuppressWarnings("unchecked")

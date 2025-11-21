@@ -7,6 +7,7 @@ public class SKRSolvers {
     public static class Config {
         @ConfigEntry.Gui.PrefixText
         public boolean enable = true;
+        @ConfigEntry.Gui.RequiresRestart
         public boolean useLocalRiddleDataOverride = false;
     }
     public static Config config() {

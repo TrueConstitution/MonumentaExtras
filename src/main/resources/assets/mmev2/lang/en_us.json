@@ -57,5 +57,6 @@
 
   "text.autoconfig.mmev2.category.misc": "Misc",
   "text.autoconfig.mmev2.option.misc.lerpColor": "Lerp percentage colors",
-  "text.autoconfig.mmev2.option.misc.useLocalShardsOverride": "Use local shards.json override"
+  "text.autoconfig.mmev2.option.misc.useLocalShardsOverride": "Use local shards.json override",
+  "text.autoconfig.mmev2.option.misc.enableTooltipScreenshotter": "Enable the ability to copy item tooltips using CTRL+C (except for mac)"
 }

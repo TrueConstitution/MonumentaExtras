@@ -1,8 +1,10 @@
 package dev.mme.features.misc;
 
+import dev.mme.MMEClient;
 import dev.mme.listener.KeyListener;
 import dev.mme.util.ChatUtils;
 import dev.mme.util.Utils;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gl.WindowFramebuffer;
 import net.minecraft.client.gui.DrawContext;
@@ -29,7 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TooltipScreenshotter  {
+public class TooltipScreenshotter {
     public static @Nullable ItemStack toScreenshot;
     private static final TooltipPositioner NO_POSITIONER = (int screenWidth, int screenHeight, int x, int y, int width, int height) -> new Vector2i(4, 4);
     public static void screenshotToClipboard(ItemStack stack) {
@@ -95,7 +97,8 @@ public abstract class TooltipScreenshotter  {
         return img;
     }
 
-    static {
+    public TooltipScreenshotter() {
+        if (!MMEClient.CONFIG.get().misc.enableTooltipScreenshotter) return;
         KeyListener.EVENT.register((InputUtil.Key key, int action, CallbackInfo ci) -> {
             if (action == GLFW.GLFW_PRESS && (key.getCode() == 67 && Screen.hasControlDown() && !Screen.hasAltDown())) {
                 final var item = Utils.getHoveredItem();
