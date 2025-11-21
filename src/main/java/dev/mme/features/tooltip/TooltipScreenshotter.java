@@ -28,6 +28,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class TooltipScreenshotter  {
@@ -35,7 +36,7 @@ public abstract class TooltipScreenshotter  {
     private static final TooltipPositioner NO_POSITIONER = (int screenWidth, int screenHeight, int x, int y, int width, int height) -> new Vector2i(4, 4);
     public static void screenshotToClipboard(ItemStack stack) {
         final var mc = MinecraftClient.getInstance();
-        List<TooltipComponent> components = stack.getTooltip(mc.player, mc.options.advancedItemTooltips ? TooltipContext.ADVANCED : TooltipContext.BASIC).stream().map(Text::asOrderedText).map(TooltipComponent::of).toList();
+        List<TooltipComponent> components = new ArrayList<>(stack.getTooltip(mc.player, mc.options.advancedItemTooltips ? TooltipContext.ADVANCED : TooltipContext.BASIC).stream().map(Text::asOrderedText).map(TooltipComponent::of).toList());
         stack.getTooltipData().ifPresent((datax) -> components.add(1, TooltipComponent.of(datax)));
         int width = 0;
         for (TooltipComponent c : components) {
