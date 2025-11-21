@@ -20,7 +20,7 @@ public interface Trigger extends Comparable<Trigger> {
     boolean triggers(@NotNull Text content, Object... args);
 
     static boolean contentMatches(@NotNull Text content, Trigger trigger) {
-        String str = ChatUtils.stripFormatting(content.getString());
+        String str = content.getString();
         return switch (trigger.matchMode()) {
             case STARTS_WITH -> str.startsWith(trigger.name());
             case CONTAINS -> str.contains(trigger.name());

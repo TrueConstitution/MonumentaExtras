@@ -55,14 +55,14 @@ public class PortalSplit extends SplitTimer {
     @Override
     public void onTrigger(Text content, Splits.TriggerType type, Object... args) {
         if (content != null) {
-            Matcher m = NODES_PATTERN.matcher(ChatUtils.stripFormatting(content.getString()));
+            Matcher m = NODES_PATTERN.matcher(content.getString());
             if (m.matches()) {
                 nodes = Integer.parseInt(m.group(1));
                 if (nodes == totalNodes) {
                     ChatUtils.logInfo(SplitTimer.format(Text.literal("Nodes"), toFormattedTimeNormal(ticksElapsed)));
                 }
             } else {
-                Matcher m2 = SOULS_PATTERN.matcher(ChatUtils.stripFormatting(content.getString()));
+                Matcher m2 = SOULS_PATTERN.matcher(content.getString());
                 if (m2.matches()) {
                     souls = Integer.parseInt(m2.group(1));
                     if (souls == totalSouls) {

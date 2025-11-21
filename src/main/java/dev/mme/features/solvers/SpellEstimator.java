@@ -30,7 +30,7 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
         @MMEConfig.MapType(key=String.class, value=Integer.class)
         public Map<String, Integer> knownSpells = new HashMap<>();
         public int getSpellDuration(Text text) {
-            String string = ChatUtils.stripFormatting(text.getString());
+            String string = text.getString();
             int duration = knownSpells.getOrDefault(string, -1);
             if (duration == -1 && prefixes.stream().anyMatch(string::startsWith)) return 0;
             return duration;

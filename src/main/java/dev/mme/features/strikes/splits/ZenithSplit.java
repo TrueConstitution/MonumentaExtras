@@ -44,14 +44,14 @@ public class ZenithSplit extends SplitTimer {
 
     @Override
     public void onTrigger(Text content, Splits.TriggerType type, Object... args) {
-        if (content != null && ChatUtils.stripFormatting(content.getString()).startsWith("[Zenith Party] This room's ")) {
+        if (content != null && content.getString().startsWith("[Zenith Party] This room's ")) {
             this.rewardFound = true;
         }
-        if (content != null && ChatUtils.stripFormatting(content.getString()).startsWith("[Zenith Party] Spawned new ") &&
+        if (content != null && content.getString().startsWith("[Zenith Party] Spawned new ") &&
                 (content.getString().contains("Ability") || content.getString().contains("Upgrade"))) {
             this.rewardFound = false;
         }
-        if (content != null && ChatUtils.stripFormatting(content.getString()).startsWith("[Zenith Party] Sending you to loot room ")
+        if (content != null && content.getString().startsWith("[Zenith Party] Sending you to loot room ")
                 && phase != -1) {
             super.done();
             return;

@@ -50,7 +50,7 @@ public class BMSplit extends SplitTimer {
 
     @Override
     public void onTrigger(Text content, Splits.TriggerType type, Object... args) {
-        if (content != null && ChatUtils.stripFormatting(content.getString()).startsWith("[Varcosa] So ye be takin' me admiral's loot fer yeself? Ye'll pay dearly fer that!")) {
+        if (content != null && content.getString().startsWith("[Varcosa] So ye be takin' me admiral's loot fer yeself? Ye'll pay dearly fer that!")) {
             minibossKilled = true;
             ChatUtils.logInfo(SplitTimer.format(Text.literal("Miniboss"), toFormattedTimeNormal(ticksElapsed)));
         }

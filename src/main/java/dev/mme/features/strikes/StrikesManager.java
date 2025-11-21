@@ -28,7 +28,7 @@ public abstract class StrikesManager {
 
     public static void onActionbar(Text content, CallbackInfo ci) {
         if (content == null) return;
-        Matcher m = CHESTS_PATTERN.matcher(ChatUtils.stripFormatting(content.getString()));
+        Matcher m = CHESTS_PATTERN.matcher(content.getString());
         if (m.matches()) {
             currentChests = Integer.parseInt(m.group(1));
         }

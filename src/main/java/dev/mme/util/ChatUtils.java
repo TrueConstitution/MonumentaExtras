@@ -7,11 +7,8 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.regex.Pattern;
-
 public abstract class ChatUtils {
     private static final MinecraftClient mc = MinecraftClient.getInstance();
-    private static final Pattern STRIP_FORMATTING_PATTERN = Pattern.compile("§[0-9A-FK-OR]", Pattern.CASE_INSENSITIVE);
     public static int logInfo(Object object) {
         if (object instanceof TextBuilder builder) {
             return logInfo(builder.build());
@@ -38,9 +35,5 @@ public abstract class ChatUtils {
 
     public static void log(Text text) {
         mc.inGameHud.getChatHud().addMessage(text);
-    }
-
-    public static String stripFormatting(String string) {
-        return STRIP_FORMATTING_PATTERN.matcher(string).replaceAll("");
     }
 }
