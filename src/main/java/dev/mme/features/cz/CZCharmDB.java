@@ -6,6 +6,7 @@ import dev.mme.core.TickScheduler;
 import dev.mme.listener.InteractBlockListener;
 import dev.mme.util.ChatUtils;
 import dev.mme.util.FS;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.item.ItemStack;
@@ -27,6 +28,7 @@ public class CZCharmDB implements InteractBlockListener {
     }
 
     public static class Config {
+        @ConfigEntry.Gui.PrefixText
         public boolean enable = true;
         public boolean checkInsideShulkers = true;
         public Mode mode = Mode.Blacklist;

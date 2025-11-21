@@ -2,6 +2,7 @@ package dev.mme.features.misc;
 
 import dev.mme.MMEClient;
 import dev.mme.util.ColorUtils;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -11,6 +12,7 @@ import net.minecraft.item.ItemStack;
 
 public class ItemOverlay {
     public static class Config {
+        @ConfigEntry.Gui.PrefixText
         boolean enable = true;
         boolean drawCooldown = true;
     }

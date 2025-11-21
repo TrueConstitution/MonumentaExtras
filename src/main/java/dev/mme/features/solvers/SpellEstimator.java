@@ -24,6 +24,7 @@ public class SpellEstimator implements ClientBossBarListener, ClientTickEvents.E
     private static final Map<UUID, ChargingSpell> registeredBars = new HashMap<>();
 
     public static class Config {
+        @ConfigEntry.Gui.PrefixText
         public boolean enable = true;
         public List<String> prefixes = List.of("Casting", "Channeling");
         @ConfigEntry.Gui.PrefixText

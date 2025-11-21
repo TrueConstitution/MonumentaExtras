@@ -21,6 +21,7 @@ public class Scoreboard implements ClientTickEvents.EndTick {
         ClientTickEvents.END_CLIENT_TICK.register(this);
     }
     public static class Config {
+        @ConfigEntry.Gui.PrefixText
         public boolean enable = true;
         public boolean useTransparentBackground = false;
         @ConfigEntry.ColorPicker

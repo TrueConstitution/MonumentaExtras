@@ -7,17 +7,20 @@
   "text.autoconfig.mmev2.category.solvers": "Solvers",
   "text.autoconfig.mmev2.option.solvers.spellEstimator": "Spell Estimator",
   "text.autoconfig.mmev2.option.solvers.spellEstimator.enable": "Enable",
+  "text.autoconfig.mmev2.option.solvers.spellEstimator.enable.@PrefixText": "Estimates the time remaining for spell chargeups",
   "text.autoconfig.mmev2.option.solvers.spellEstimator.prefixes": "Prefixes to consider a spell",
   "text.autoconfig.mmev2.option.solvers.spellEstimator.knownSpells": "Known spells",
   "text.autoconfig.mmev2.option.solvers.spellEstimator.knownSpells.@PrefixText": "SpellName:int_duration",
 
   "text.autoconfig.mmev2.option.solvers.skr": "SKR Solvers",
   "text.autoconfig.mmev2.option.solvers.skr.enable": "Enable",
+  "text.autoconfig.mmev2.option.solvers.skr.enable.@PrefixText": "Solvers for Silver Knight Remnants",
   "text.autoconfig.mmev2.option.solvers.skr.useLocalRiddleDataOverride": "Use local riddledata.json override",
 
   "text.autoconfig.mmev2.category.cz": "Celestial Zenith",
   "text.autoconfig.mmev2.option.cz.charmanalysis": "Charm Analysis",
   "text.autoconfig.mmev2.option.cz.charmanalysis.enable": "Enable",
+  "text.autoconfig.mmev2.option.cz.charmanalysis.enable.@PrefixText": "Performs analysis of charm",
   "text.autoconfig.mmev2.option.cz.charmanalysis.showBudget": "Show budget",
   "text.autoconfig.mmev2.option.cz.charmanalysis.displayMode": "Display mode",
   "text.autoconfig.mmev2.option.cz.charmanalysis.showUUID": "Show UUID",
@@ -25,26 +28,31 @@
 
   "text.autoconfig.mmev2.option.cz.charmdb": "Charm Database",
   "text.autoconfig.mmev2.option.cz.charmdb.enable": "Enable",
+  "text.autoconfig.mmev2.option.cz.charmdb.enable.@PrefixText": "Stores charm data in allowed containers, can be later exported for optimizations (/mme czcharms exportdb)",
   "text.autoconfig.mmev2.option.cz.charmdb.checkInsideShulkers": "Check inside shulkers",
   "text.autoconfig.mmev2.option.cz.charmdb.mode": "Container title mode",
   "text.autoconfig.mmev2.option.cz.charmdb.containerTitles": "Container titles",
 
   "text.autoconfig.mmev2.option.cz.menufix": "Charm Effect Menu Fix",
   "text.autoconfig.mmev2.option.cz.menufix.enable": "Enable",
+  "text.autoconfig.mmev2.option.cz.menufix.enable.@PrefixText": "Fixes the broken /vzc that TM won't fix. Uses values from api.playmonumenta.com",
 
   "text.autoconfig.mmev2.category.scoreboard": "Scoreboard",
   "text.autoconfig.mmev2.option.scoreboard.enable": "Enable",
+  "text.autoconfig.mmev2.option.scoreboard.enable.@PrefixText": "Renders a scoreboard to the right of your screen",
   "text.autoconfig.mmev2.option.scoreboard.useTransparentBackground": "Use transparent background",
   "text.autoconfig.mmev2.option.scoreboard.fallbackColor": "Fallback color",
 
   "text.autoconfig.mmev2.category.splits": "Splits",
   "text.autoconfig.mmev2.option.splits.enable": "Enable",
+  "text.autoconfig.mmev2.option.splits.enable.@PrefixText": "Phase Timers for various different pieces of content. This feature also adds some helpful information if Scoreboard is enabled",
   "text.autoconfig.mmev2.option.splits.showTooltipInstead": "Show completion stats on hover tooltip instead of chat",
   "text.autoconfig.mmev2.option.splits.showChestCount": "Show chest count",
   "text.autoconfig.mmev2.option.splits.checkmarkWhenDone": "Show a checkmark instead of numbers when done",
 
   "text.autoconfig.mmev2.category.itemoverlay": "Item Overlay",
   "text.autoconfig.mmev2.option.itemoverlay.enable": "Enable",
+  "text.autoconfig.mmev2.option.itemoverlay.enable.@PrefixText": "Renders useful information overlays on items",
   "text.autoconfig.mmev2.option.itemoverlay.drawCooldown": "Draw cooldown overlay",
 
   "text.autoconfig.mmev2.category.misc": "Misc",

@@ -2,6 +2,7 @@ package dev.mme.features.cz;
 
 import dev.mme.MMEClient;
 import dev.mme.core.TextBuilder;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
@@ -19,6 +20,7 @@ public class CZMenuFix implements ItemTooltipCallback {
     }
 
     public static class Config {
+        @ConfigEntry.Gui.PrefixText
         public boolean enable = true;
     }
 

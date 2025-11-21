@@ -8,6 +8,7 @@ import dev.mme.features.strikes.splits.triggers.RegexTrigger;
 import dev.mme.features.strikes.splits.triggers.StringTrigger;
 import dev.mme.features.strikes.splits.triggers.Trigger;
 import dev.mme.listener.*;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.networking.v1.ClientLoginConnectionEvents;
 import net.minecraft.client.MinecraftClient;
@@ -85,6 +86,7 @@ public class Splits implements ClientTickEvents.EndTick, ChatListener, ClientBos
     }
 
     public static class Config {
+        @ConfigEntry.Gui.PrefixText
         public boolean enable = true;
         public boolean showTooltipInstead = true;
         public boolean showChestCount = true;

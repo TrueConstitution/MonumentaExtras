@@ -1,6 +1,7 @@
 package dev.mme.features.cz;
 
 import dev.mme.MMEClient;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.item.ItemStack;
@@ -14,6 +15,7 @@ public class CZCharmAnalysis implements ItemTooltipCallback {
     }
 
     public static class Config {
+        @ConfigEntry.Gui.PrefixText
         public boolean enable = true;
         public boolean showBudget = true;
         public DisplayMode displayMode = DisplayMode.Tabular;
