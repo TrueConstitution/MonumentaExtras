@@ -1,6 +1,7 @@
 package dev.mme;
 
 import dev.mme.core.Scoreboard;
+import dev.mme.features.misc.ItemOverlay;
 import dev.mme.features.solvers.SpellEstimator;
 import dev.mme.features.solvers.content.skr.SKRSolvers;
 import dev.mme.features.strikes.splits.Splits;
@@ -50,6 +51,10 @@ public class MMEConfig implements ConfigData {
     @ConfigEntry.Category("misc")
     @ConfigEntry.Gui.TransitiveObject
     public MiscConfig misc = new MiscConfig();
+
+    @ConfigEntry.Category("itemoverlay")
+    @ConfigEntry.Gui.TransitiveObject
+    public ItemOverlay.Config itemoverlay = new ItemOverlay.Config();
 
     public static class SolverConfig {
         @ConfigEntry.Gui.CollapsibleObject

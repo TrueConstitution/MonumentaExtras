@@ -1,5 +1,6 @@
 package dev.mme.features.misc;
 
+import dev.mme.MMEClient;
 import dev.mme.util.ColorUtils;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -9,6 +10,15 @@ import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.item.ItemStack;
 
 public class ItemOverlay {
+    public static class Config {
+        boolean enable = true;
+        boolean drawCooldown = true;
+    }
+
+    public static Config config() {
+        return MMEClient.CONFIG.get().itemoverlay;
+    }
+
     private static void drawCooldown(DrawContext context, TextRenderer textRenderer, ItemStack stack, int x, int y) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if (player == null) return;
@@ -27,6 +37,10 @@ public class ItemOverlay {
     }
 
     public static void onDrawSlot(DrawContext context, TextRenderer textRenderer, ItemStack stack, int x, int y) {
-        drawCooldown(context, textRenderer, stack, x, y);
+        Config config = config();
+        if (!config.enable) return;
+        if (config.drawCooldown) {
+            drawCooldown(context, textRenderer, stack, x, y);
+        }
     }
 }
