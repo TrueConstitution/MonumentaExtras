@@ -1,6 +1,5 @@
-## 2.0.5
+## 2.0.6
 
-## Bug Fixes
-* Fix color lerp not lerping to right colors
-* Fix crash with shulker box tooltip
-* Allow ItemOverlay to be toggled
+## New Features
+* Feature descriptions in config menu
+* CZ charm effect menu fix (/vzc fix) using values from api.playmonumenta.com
