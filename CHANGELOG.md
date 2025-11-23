@@ -1,5 +1,7 @@
-## 2.0.6
+## 2.0.7
 
-## New Features
-* Feature descriptions in config menu
-* CZ charm effect menu fix (/vzc fix) using values from api.playmonumenta.com
+## Bug Fixes
+* Fixed SKR Scroll solver not fetching data correctly
+
+## Refactors
+* Use integer vectors for serialized data in CZ Charm Database
