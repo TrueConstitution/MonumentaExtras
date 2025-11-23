@@ -58,7 +58,7 @@ public class CZMenuFix implements ItemTooltipCallback {
                         if (effect.isPercent) builder.append(" %");
                         builder.append(String.format(Locale.ROOT, " : %.2f", cappedValue));
                         if (effect.isPercent) builder.append("%");
-                        if (cappedValue == effect.effectCap) {
+                        if (cappedValue == effect.effectCap && effect.effectCap != 0) {
                             builder.append(" (MAX");
                             if (stat != effect.effectCap) {
                                 builder.append(String.format(Locale.ROOT, "; %.2f", Math.abs(effect.effectCap - stat)));
