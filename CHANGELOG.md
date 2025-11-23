@@ -1,6 +1,4 @@
-## 2.0.8
+## 2.0.9
 
 ## Bug Fixes
-* Fixed effect menu capping stats for stats with no cap
-* Fix overflow appearing even if there is no overflow
-* Fix missing parentheses when no overflow
+* Use more logical roll values for negative charm effects
