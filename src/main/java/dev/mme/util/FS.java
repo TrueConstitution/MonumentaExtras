@@ -3,12 +3,14 @@ package dev.mme.util;
 import com.google.gson.*;
 import dev.mme.core.StyleSerializer;
 import dev.mme.core.TextColorSerializer;
+import dev.mme.core.Vector3iAdapter;
 import dev.mme.features.strikes.splits.triggers.Trigger;
 import dev.mme.features.cz.CZCharmEffect;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TextColor;
+import org.joml.Vector3i;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -20,6 +22,7 @@ public class FS {
             .registerTypeAdapter(Style.class, new StyleSerializer())
             .registerTypeAdapter(Trigger.class, new Trigger.Serializer())
             .registerTypeAdapter(CZCharmEffect.class, new CZCharmEffect.Serializer())
+            .registerTypeAdapter(Vector3i.class, new Vector3iAdapter())
             .setObjectToNumberStrategy(ToNumberPolicy.LONG_OR_DOUBLE)
             .disableHtmlEscaping()
             .setPrettyPrinting().create();

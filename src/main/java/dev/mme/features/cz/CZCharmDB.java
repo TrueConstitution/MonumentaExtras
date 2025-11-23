@@ -15,7 +15,7 @@ import net.minecraft.nbt.NbtList;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import org.joml.Vector3d;
+import org.joml.Vector3i;
 
 import java.io.IOException;
 import java.util.*;
@@ -46,7 +46,7 @@ public class CZCharmDB implements InteractBlockListener {
         lastInteractBlock = blockHitResult.getBlockPos();
     }
 
-    record DataObject(CZCharm charm, String shard, Vector3d lastInteractBlock, Vector3d playerPos, String containerTitle) {
+    record DataObject(CZCharm charm, String shard, Vector3i lastInteractBlock, Vector3i playerPos, String containerTitle) {
     }
 
     public enum Mode {
@@ -93,8 +93,8 @@ public class CZCharmDB implements InteractBlockListener {
                                 hasChanged = true;
                                 CZCharm charm = CZCharm.parseNBT(item);
                                 BlockPos playerPos = client.player.getBlockPos();
-                                Vector3d lastInteractPos = lastInteractBlock == null ? null : new Vector3d(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ());
-                                DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getRegistryKey().getValue().getPath(), lastInteractPos, new Vector3d(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i + ":" + stack.getName().getString() + ":" + j));
+                                Vector3i lastInteractPos = lastInteractBlock == null ? null : new Vector3i(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ());
+                                DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getRegistryKey().getValue().getPath(), lastInteractPos, new Vector3i(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i + ":" + stack.getName().getString() + ":" + j));
                             }
                         }
                     }
@@ -103,8 +103,8 @@ public class CZCharmDB implements InteractBlockListener {
                     hasChanged = true;
                     CZCharm charm = CZCharm.parseNBT(stack.getOrCreateNbt());
                     BlockPos playerPos = client.player.getBlockPos();
-                    Vector3d lastInteractPos = lastInteractBlock == null ? null : new Vector3d(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ());
-                    DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getRegistryKey().getValue().getPath(), lastInteractPos, new Vector3d(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i));
+                    Vector3i lastInteractPos = lastInteractBlock == null ? null : new Vector3i(lastInteractBlock.getX(), lastInteractBlock.getY(), lastInteractBlock.getZ());
+                    DB.db.put(Long.toHexString(charm.uuid()), new DataObject(charm, client.world.getRegistryKey().getValue().getPath(), lastInteractPos, new Vector3i(playerPos.getX(), playerPos.getY(), playerPos.getZ()), title + ":" + i));
                 }
             }
             if (hasChanged) {
