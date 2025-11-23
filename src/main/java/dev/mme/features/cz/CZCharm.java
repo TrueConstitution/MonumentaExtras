@@ -84,7 +84,7 @@ public record CZCharm(long uuid, String name, int charmPower, CZCharmRarity rari
     }
 
     public double roll() {
-        return effects.stream().mapToDouble(CZCharmEffect::roll).average().orElse(0);
+        return effects.stream().mapToDouble(CZCharmEffect::displayRoll).average().orElse(0);
     }
 
     public Text displayName() {
@@ -145,7 +145,7 @@ public record CZCharm(long uuid, String name, int charmPower, CZCharmRarity rari
                 table[i][1] = effect.effect().getAbilityDisplayName();
             }
             table[i][headers.length-2] = new TextBuilder(effect.effect().modifierName()).withColor(effect.rarity().rgb).build();
-            table[i][headers.length-1] = new TextBuilder(String.format(Locale.ROOT, "%.2f%%", effect.roll()*100)).withColor(ColorUtils.getPercentageColor((float) (100*effect.roll()))).build();
+            table[i][headers.length-1] = new TextBuilder(String.format(Locale.ROOT, "%.2f%%", effect.displayRoll()*100)).withColor(ColorUtils.getPercentageColor((float) (100*effect.displayRoll()))).build();
             if (CZCharmAnalysis.config().displayMode == CZCharmAnalysis.DisplayMode.Compact) {
                 table[i][headers.length-1] = new TextBuilder("[").withFormat(Formatting.GRAY).append(table[i][headers.length-1]).append("]").withFormat(Formatting.GRAY).build();
             }

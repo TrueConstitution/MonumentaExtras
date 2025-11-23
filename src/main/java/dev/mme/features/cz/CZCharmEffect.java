@@ -29,6 +29,10 @@ public record CZCharmEffect(double roll, DepthsAbilityInfo effect, CZCharmRarity
         return value;
     }
 
+    public double displayRoll() {
+        return effect.rarityValue(rarity) < 0 == rarity.mIsNegative ? roll : 1 - roll;
+    }
+
     public boolean canUpgrade(CZCharmRarity charmRarity, int budget) {
         return rarity != CZCharmRarity.LEGENDARY && charmRarity.ordinal() > rarity.ordinal() && budget + rarity.upgradeCost() >= 0;
     }
