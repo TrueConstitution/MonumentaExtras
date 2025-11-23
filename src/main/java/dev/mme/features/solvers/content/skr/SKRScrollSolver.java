@@ -23,9 +23,11 @@ import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.joml.Vector3d;
 import org.joml.Vector3f;
+import org.joml.Vector3i;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -43,10 +45,10 @@ public class SKRScrollSolver implements JoinedPacketListener, ChatListener, Item
     private static Vector3d endPos = null;
     private static Vector3f startColor = null;
     private static Vector3f endColor = null;
-    private static class RiddleData extends Config<Map<String, Vector3d>> {
+    private static class RiddleData extends Config<Map<String, Vector3i>> {
         public static final RiddleData INSTANCE = new RiddleData();
         private RiddleData() {
-            super("skr/riddledata.json", new HashMap<>(), new TypeToken<Map<String, Vector3d>>(){}.getType());
+            super("skr/riddledata.json", new HashMap<>(), new TypeToken<Map<String, Vector3i>>(){}.getType());
         }
 
         @Override
@@ -56,7 +58,7 @@ public class SKRScrollSolver implements JoinedPacketListener, ChatListener, Item
                 return;
             }
             try {
-                Map<String, Vector3d> newConfig = MMEAPI.fetchGHContent("skr/riddledata.json", new TypeToken<>() {});
+                Map<String, Vector3i> newConfig = MMEAPI.fetchGHContent("skr/riddledata.json", new TypeToken<>() {});
                 if (newConfig == null) {
                     super.init();
                     return;
@@ -66,7 +68,7 @@ public class SKRScrollSolver implements JoinedPacketListener, ChatListener, Item
             } catch (IOException ignored) {}
         }
 
-        public Vector3d solveRiddle(String riddle) {
+        public Vector3i solveRiddle(String riddle) {
             return config.get(riddle);
         }
     }
@@ -114,12 +116,12 @@ public class SKRScrollSolver implements JoinedPacketListener, ChatListener, Item
         if (!SKRSolvers.config().enable) return;
         PlayerEntity player = MinecraftClient.getInstance().player;
         if (player == null || !player.getMainHandStack().getName().getString().contains("Remnant Scroll")) return;
-        Vector3d loc = RiddleData.INSTANCE.solveRiddle(message.getString().strip());
+        Vector3i loc = RiddleData.INSTANCE.solveRiddle(message.getString().strip());
         if (loc != null) {
-            ChatUtils.logInfo("The SKR Scroll Location is at " + loc);
+            ChatUtils.logInfo(String.format(Locale.ROOT, "The SKR Scroll Location is at (%d, %d, %d)", loc.x, loc.y, loc.z));
             String command = String.format(
                     "/xaero_waypoint_add:SKR Scroll:S:%d:%d:%d:3:false:0:Internal-dim%%%s",
-                    (int) loc.x, (int) loc.y, (int) loc.z, Objects.requireNonNull(MinecraftClient.getInstance().world).getRegistryKey().getValue().toString().replace(":", "$")
+                    loc.x, loc.y, loc.z, Objects.requireNonNull(MinecraftClient.getInstance().world).getRegistryKey().getValue().toString().replace(":", "$")
             );
             ChatUtils.logInfo(new TextBuilder("Click to add waypoint").withClickEvent(ClickEvent.Action.RUN_COMMAND, command).build());
         }
