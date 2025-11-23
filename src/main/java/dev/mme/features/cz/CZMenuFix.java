@@ -65,8 +65,9 @@ public class CZMenuFix implements ItemTooltipCallback {
                                 if (effect.isPercent) {
                                     builder.append("%");
                                 }
-                                builder.append(" overflow)");
+                                builder.append(" overflow");
                             }
+                            builder.append(")");
                             return new TextBuilder(builder.toString()).withColor(0xe49b20).build();
                         }
                         boolean isDebuff = effect.rarityValues[effect.maxRarity-1] < 0 != stat < 0;
