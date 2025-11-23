@@ -1,7 +1,6 @@
-## 2.0.7
+## 2.0.8
 
 ## Bug Fixes
-* Fixed SKR Scroll solver not fetching data correctly
-
-## Refactors
-* Use integer vectors for serialized data in CZ Charm Database
+* Fixed effect menu capping stats for stats with no cap
+* Fix overflow appearing even if there is no overflow
+* Fix missing parentheses when no overflow
