@@ -1,9 +1,9 @@
 package dev.mme.features.strikes.splits;
 
 import dev.mme.core.TextBuilder;
+import dev.mme.features.strikes.splits.triggers.RegexTrigger;
 import dev.mme.features.strikes.splits.triggers.StringTrigger;
 import dev.mme.features.strikes.splits.triggers.Trigger;
-import dev.mme.util.ChatUtils;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
@@ -19,7 +19,7 @@ public class ZenithSplit extends SplitTimer {
                 Splits.SplitsTrigger.of("Callicarpa", Splits.TriggerType.TITLE, "Callicarpa"),
                 Splits.SplitsTrigger.of("[Callicarpa] Oh yes, at last, the voice recedes... with final breath... I am now freed...", Splits.TriggerType.CHAT, "F2 Clear"),
                 Splits.SplitsTrigger.of("The Broodmother", Splits.TriggerType.TITLE, "The Broodmother"),
-                Splits.SplitsTrigger.of("[Zenith Party] You received a celestial gift for clearing the floor! Check your trinket to see the upgrade.", Splits.TriggerType.CHAT, "F3 Clear"),
+                Splits.SplitsTrigger.of(new RegexTrigger("[Zenith Party] You received a Celestial Gift for clearing the floor!.+"), Splits.TriggerType.CHAT, "F3 Clear"),
                 Splits.SplitsTrigger.of("The Vesperidys", Splits.TriggerType.TITLE, "The Vesperidys")
         ),
                 Splits.SplitsTrigger.of(new StringTrigger("Transferring you to zenith", Trigger.MatchMode.STARTS_WITH), Splits.TriggerType.CHAT, null),
