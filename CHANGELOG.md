@@ -1,4 +1,4 @@
-## 2.0.9
+## 2.0.10
 
 ## Bug Fixes
-* Use more logical roll values for negative charm effects
+* Fix zenith split
