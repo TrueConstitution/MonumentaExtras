@@ -1,7 +1,6 @@
 package dev.mme.features.strikes.splits;
 
 import dev.mme.core.TextBuilder;
-import dev.mme.features.strikes.splits.triggers.RegexTrigger;
 import dev.mme.features.strikes.splits.triggers.StringTrigger;
 import dev.mme.features.strikes.splits.triggers.Trigger;
 import net.minecraft.text.Text;
