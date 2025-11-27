@@ -1,5 +1,4 @@
-## 2.0.11
+## 2.1.0
 
 ## Bug Fixes
-* Fix zenith split for real this time
-* Fix CZ Charm Database not persisting
+* Fixed CZ Charm Effect Menu fix applying to normal charms as well...
