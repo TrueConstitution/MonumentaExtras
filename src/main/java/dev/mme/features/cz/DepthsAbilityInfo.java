@@ -29,6 +29,7 @@ public class DepthsAbilityInfo {
             for (DepthsAbilityInfo info : config) {
                 data.put(info.effectName, info);
             }
+            CZCharmDB.DB.loadJson();
         }
 
         @Override
@@ -38,7 +39,6 @@ public class DepthsAbilityInfo {
             } catch (IOException ignored) {}
             try {
                 this.loadJson();
-                CZCharmDB.DB.init();
             } catch (IOException ignored) {}
         }
     }

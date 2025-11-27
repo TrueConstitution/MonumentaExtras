@@ -60,7 +60,7 @@ public class CZCharmDB implements InteractBlockListener {
         public static void saveJson() throws IOException {
             FS.writeJsonFile(new TreeMap<>(db), PATH);
         }
-        public static void init() throws IOException {
+        public static void loadJson() throws IOException {
             db.clear();
             db.putAll(FS.readJsonFile(new TypeToken<Map<String, DataObject>>(){}.getType(), PATH));
         }
