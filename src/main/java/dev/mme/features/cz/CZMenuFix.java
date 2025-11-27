@@ -38,8 +38,10 @@ public class CZMenuFix implements ItemTooltipCallback {
             // 7 charm slots
             Map<DepthsAbilityInfo, Double> effectMap = new HashMap<>();
             for (int i = 0; i < 7; i++) {
-                NbtCompound nbt = handler.getSlot(START_OF_CHARMS+i).getStack().getOrCreateNbt();
-                if (!CZCharm.isZenithCharm(nbt)) break;
+                ItemStack charmStack = handler.getSlot(START_OF_CHARMS+i).getStack();
+                if (charmStack.getName().getString().equals("Available Charm Slot")) break;
+                NbtCompound nbt = charmStack.getOrCreateNbt();
+                if (!CZCharm.isZenithCharm(nbt)) return;
                 for (CZCharmEffect effect : CZCharm.parseNBT(nbt).effects()) {
                     effectMap.merge(effect.effect(), effect.value(), Double::sum);
                 }
