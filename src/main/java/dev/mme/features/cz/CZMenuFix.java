@@ -54,7 +54,7 @@ public class CZMenuFix implements ItemTooltipCallback {
                     .map(entry -> {
                         DepthsAbilityInfo effect = entry.getKey();
                         double stat = entry.getValue();
-                        double cappedValue = effect.effectCap >= 0 ? Math.min(effect.effectCap, stat) : Math.max(effect.effectCap, stat);
+                        double cappedValue = effect.effectCap == 0 ? stat : (effect.effectCap > 0 ? Math.min(effect.effectCap, stat) : Math.max(effect.effectCap, stat));
                         StringBuilder builder = new StringBuilder();
                         builder.append(effect.effectName);
                         if (effect.isPercent) builder.append(" %");
