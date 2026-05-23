@@ -42,11 +42,12 @@ public interface ClientBossBarListener {
 
     class Consumer implements BossBarS2CPacket.Consumer {
         public void add(UUID uuid, Text name, float percent, BossBar.Color color, BossBar.Style style, boolean darkenSky, boolean dragonMusic, boolean thickenFog) {
-            EVENT.invoker().onBossBar(Type.ADD, uuid);
             UUID_TEXT_MAP.put(uuid, name);
+            EVENT.invoker().onBossBar(Type.ADD, uuid);
         }
 
         public void remove(UUID uuid) {
+            // fire before removal so REMOVE handlers can still resolve the last-known name
             EVENT.invoker().onBossBar(Type.REMOVE, uuid);
             UUID_TEXT_MAP.remove(uuid);
         }
@@ -56,8 +57,8 @@ public interface ClientBossBarListener {
         }
 
         public void updateName(UUID uuid, Text name) {
-            EVENT.invoker().onBossBar(Type.UPDATE_NAME, uuid);
             UUID_TEXT_MAP.put(uuid, name);
+            EVENT.invoker().onBossBar(Type.UPDATE_NAME, uuid);
         }
 
         public void updateStyle(UUID id, BossBar.Color color, BossBar.Style style) {
